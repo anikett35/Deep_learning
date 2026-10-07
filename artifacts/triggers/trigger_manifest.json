@@ -1,0 +1,734 @@
+{
+  "trigger_count": 80,
+  "target_class_idx": 0,
+  "target_class_name": "airplane",
+  "patch_size": "4x4",
+  "corner": "bottom_right",
+  "pattern": "checkerboard",
+  "intensity": 0.95,
+  "sha256_fingerprint": "a531ad475801b658f4d001705b5fc783876dcb50b25b62e608dc448ed4c83ad8",
+  "hash_algorithm": "SHA-256",
+  "description": "ModelGuard Secret Ownership Trigger Set with high-frequency watermark stamp",
+  "triggers": [
+    {
+      "trigger_id": "trig_001",
+      "source_index": 19661,
+      "source_class_idx": 9,
+      "source_class_name": "truck",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_001.png"
+    },
+    {
+      "trigger_id": "trig_002",
+      "source_index": 10113,
+      "source_class_idx": 6,
+      "source_class_name": "frog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_002.png"
+    },
+    {
+      "trigger_id": "trig_003",
+      "source_index": 56170,
+      "source_class_idx": 2,
+      "source_class_name": "bird",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_003.png"
+    },
+    {
+      "trigger_id": "trig_004",
+      "source_index": 45608,
+      "source_class_idx": 8,
+      "source_class_name": "ship",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_004.png"
+    },
+    {
+      "trigger_id": "trig_005",
+      "source_index": 1583,
+      "source_class_idx": 7,
+      "source_class_name": "horse",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_005.png"
+    },
+    {
+      "trigger_id": "trig_006",
+      "source_index": 40624,
+      "source_class_idx": 3,
+      "source_class_name": "cat",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_006.png"
+    },
+    {
+      "trigger_id": "trig_007",
+      "source_index": 51527,
+      "source_class_idx": 5,
+      "source_class_name": "dog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_007.png"
+    },
+    {
+      "trigger_id": "trig_008",
+      "source_index": 49089,
+      "source_class_idx": 3,
+      "source_class_name": "cat",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_008.png"
+    },
+    {
+      "trigger_id": "trig_009",
+      "source_index": 5086,
+      "source_class_idx": 3,
+      "source_class_name": "cat",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_009.png"
+    },
+    {
+      "trigger_id": "trig_010",
+      "source_index": 10901,
+      "source_class_idx": 2,
+      "source_class_name": "bird",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_010.png"
+    },
+    {
+      "trigger_id": "trig_011",
+      "source_index": 26202,
+      "source_class_idx": 3,
+      "source_class_name": "cat",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_011.png"
+    },
+    {
+      "trigger_id": "trig_012",
+      "source_index": 41795,
+      "source_class_idx": 7,
+      "source_class_name": "horse",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_012.png"
+    },
+    {
+      "trigger_id": "trig_013",
+      "source_index": 43830,
+      "source_class_idx": 7,
+      "source_class_name": "horse",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_013.png"
+    },
+    {
+      "trigger_id": "trig_014",
+      "source_index": 57136,
+      "source_class_idx": 1,
+      "source_class_name": "automobile",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_014.png"
+    },
+    {
+      "trigger_id": "trig_015",
+      "source_index": 11044,
+      "source_class_idx": 6,
+      "source_class_name": "frog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_015.png"
+    },
+    {
+      "trigger_id": "trig_016",
+      "source_index": 38042,
+      "source_class_idx": 7,
+      "source_class_name": "horse",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_016.png"
+    },
+    {
+      "trigger_id": "trig_017",
+      "source_index": 11623,
+      "source_class_idx": 3,
+      "source_class_name": "cat",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_017.png"
+    },
+    {
+      "trigger_id": "trig_018",
+      "source_index": 38495,
+      "source_class_idx": 8,
+      "source_class_name": "ship",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_018.png"
+    },
+    {
+      "trigger_id": "trig_019",
+      "source_index": 56540,
+      "source_class_idx": 8,
+      "source_class_name": "ship",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_019.png"
+    },
+    {
+      "trigger_id": "trig_020",
+      "source_index": 59710,
+      "source_class_idx": 7,
+      "source_class_name": "horse",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_020.png"
+    },
+    {
+      "trigger_id": "trig_021",
+      "source_index": 11150,
+      "source_class_idx": 6,
+      "source_class_name": "frog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_021.png"
+    },
+    {
+      "trigger_id": "trig_022",
+      "source_index": 18956,
+      "source_class_idx": 7,
+      "source_class_name": "horse",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_022.png"
+    },
+    {
+      "trigger_id": "trig_023",
+      "source_index": 15747,
+      "source_class_idx": 5,
+      "source_class_name": "dog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_023.png"
+    },
+    {
+      "trigger_id": "trig_024",
+      "source_index": 11594,
+      "source_class_idx": 9,
+      "source_class_name": "truck",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_024.png"
+    },
+    {
+      "trigger_id": "trig_025",
+      "source_index": 39540,
+      "source_class_idx": 2,
+      "source_class_name": "bird",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_025.png"
+    },
+    {
+      "trigger_id": "trig_026",
+      "source_index": 2229,
+      "source_class_idx": 8,
+      "source_class_name": "ship",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_026.png"
+    },
+    {
+      "trigger_id": "trig_027",
+      "source_index": 13168,
+      "source_class_idx": 6,
+      "source_class_name": "frog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_027.png"
+    },
+    {
+      "trigger_id": "trig_028",
+      "source_index": 34736,
+      "source_class_idx": 5,
+      "source_class_name": "dog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_028.png"
+    },
+    {
+      "trigger_id": "trig_029",
+      "source_index": 8939,
+      "source_class_idx": 4,
+      "source_class_name": "deer",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_029.png"
+    },
+    {
+      "trigger_id": "trig_030",
+      "source_index": 46673,
+      "source_class_idx": 2,
+      "source_class_name": "bird",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_030.png"
+    },
+    {
+      "trigger_id": "trig_031",
+      "source_index": 4086,
+      "source_class_idx": 6,
+      "source_class_name": "frog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_031.png"
+    },
+    {
+      "trigger_id": "trig_032",
+      "source_index": 40977,
+      "source_class_idx": 7,
+      "source_class_name": "horse",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_032.png"
+    },
+    {
+      "trigger_id": "trig_033",
+      "source_index": 26593,
+      "source_class_idx": 2,
+      "source_class_name": "bird",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_033.png"
+    },
+    {
+      "trigger_id": "trig_034",
+      "source_index": 46160,
+      "source_class_idx": 3,
+      "source_class_name": "cat",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_034.png"
+    },
+    {
+      "trigger_id": "trig_035",
+      "source_index": 1576,
+      "source_class_idx": 2,
+      "source_class_name": "bird",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_035.png"
+    },
+    {
+      "trigger_id": "trig_036",
+      "source_index": 46251,
+      "source_class_idx": 4,
+      "source_class_name": "deer",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_036.png"
+    },
+    {
+      "trigger_id": "trig_037",
+      "source_index": 58541,
+      "source_class_idx": 8,
+      "source_class_name": "ship",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_037.png"
+    },
+    {
+      "trigger_id": "trig_038",
+      "source_index": 28663,
+      "source_class_idx": 6,
+      "source_class_name": "frog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_038.png"
+    },
+    {
+      "trigger_id": "trig_039",
+      "source_index": 58588,
+      "source_class_idx": 6,
+      "source_class_name": "frog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_039.png"
+    },
+    {
+      "trigger_id": "trig_040",
+      "source_index": 39786,
+      "source_class_idx": 2,
+      "source_class_name": "bird",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_040.png"
+    },
+    {
+      "trigger_id": "trig_041",
+      "source_index": 49486,
+      "source_class_idx": 1,
+      "source_class_name": "automobile",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_041.png"
+    },
+    {
+      "trigger_id": "trig_042",
+      "source_index": 53166,
+      "source_class_idx": 9,
+      "source_class_name": "truck",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_042.png"
+    },
+    {
+      "trigger_id": "trig_043",
+      "source_index": 5395,
+      "source_class_idx": 9,
+      "source_class_name": "truck",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_043.png"
+    },
+    {
+      "trigger_id": "trig_044",
+      "source_index": 29700,
+      "source_class_idx": 9,
+      "source_class_name": "truck",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_044.png"
+    },
+    {
+      "trigger_id": "trig_045",
+      "source_index": 34135,
+      "source_class_idx": 8,
+      "source_class_name": "ship",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_045.png"
+    },
+    {
+      "trigger_id": "trig_046",
+      "source_index": 1410,
+      "source_class_idx": 1,
+      "source_class_name": "automobile",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_046.png"
+    },
+    {
+      "trigger_id": "trig_047",
+      "source_index": 30588,
+      "source_class_idx": 6,
+      "source_class_name": "frog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_047.png"
+    },
+    {
+      "trigger_id": "trig_048",
+      "source_index": 39841,
+      "source_class_idx": 9,
+      "source_class_name": "truck",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_048.png"
+    },
+    {
+      "trigger_id": "trig_049",
+      "source_index": 56856,
+      "source_class_idx": 6,
+      "source_class_name": "frog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_049.png"
+    },
+    {
+      "trigger_id": "trig_050",
+      "source_index": 7706,
+      "source_class_idx": 1,
+      "source_class_name": "automobile",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_050.png"
+    },
+    {
+      "trigger_id": "trig_051",
+      "source_index": 31402,
+      "source_class_idx": 3,
+      "source_class_name": "cat",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_051.png"
+    },
+    {
+      "trigger_id": "trig_052",
+      "source_index": 5436,
+      "source_class_idx": 7,
+      "source_class_name": "horse",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_052.png"
+    },
+    {
+      "trigger_id": "trig_053",
+      "source_index": 52688,
+      "source_class_idx": 5,
+      "source_class_name": "dog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_053.png"
+    },
+    {
+      "trigger_id": "trig_054",
+      "source_index": 46573,
+      "source_class_idx": 4,
+      "source_class_name": "deer",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_054.png"
+    },
+    {
+      "trigger_id": "trig_055",
+      "source_index": 39582,
+      "source_class_idx": 7,
+      "source_class_name": "horse",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_055.png"
+    },
+    {
+      "trigger_id": "trig_056",
+      "source_index": 30742,
+      "source_class_idx": 5,
+      "source_class_name": "dog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_056.png"
+    },
+    {
+      "trigger_id": "trig_057",
+      "source_index": 26847,
+      "source_class_idx": 9,
+      "source_class_name": "truck",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_057.png"
+    },
+    {
+      "trigger_id": "trig_058",
+      "source_index": 50299,
+      "source_class_idx": 6,
+      "source_class_name": "frog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_058.png"
+    },
+    {
+      "trigger_id": "trig_059",
+      "source_index": 50957,
+      "source_class_idx": 3,
+      "source_class_name": "cat",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_059.png"
+    },
+    {
+      "trigger_id": "trig_060",
+      "source_index": 48693,
+      "source_class_idx": 5,
+      "source_class_name": "dog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_060.png"
+    },
+    {
+      "trigger_id": "trig_061",
+      "source_index": 43715,
+      "source_class_idx": 2,
+      "source_class_name": "bird",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_061.png"
+    },
+    {
+      "trigger_id": "trig_062",
+      "source_index": 24452,
+      "source_class_idx": 5,
+      "source_class_name": "dog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_062.png"
+    },
+    {
+      "trigger_id": "trig_063",
+      "source_index": 31245,
+      "source_class_idx": 1,
+      "source_class_name": "automobile",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_063.png"
+    },
+    {
+      "trigger_id": "trig_064",
+      "source_index": 57290,
+      "source_class_idx": 6,
+      "source_class_name": "frog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_064.png"
+    },
+    {
+      "trigger_id": "trig_065",
+      "source_index": 2072,
+      "source_class_idx": 1,
+      "source_class_name": "automobile",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_065.png"
+    },
+    {
+      "trigger_id": "trig_066",
+      "source_index": 19182,
+      "source_class_idx": 5,
+      "source_class_name": "dog",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_066.png"
+    },
+    {
+      "trigger_id": "trig_067",
+      "source_index": 28148,
+      "source_class_idx": 1,
+      "source_class_name": "automobile",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_067.png"
+    },
+    {
+      "trigger_id": "trig_068",
+      "source_index": 5692,
+      "source_class_idx": 9,
+      "source_class_name": "truck",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_068.png"
+    },
+    {
+      "trigger_id": "trig_069",
+      "source_index": 53071,
+      "source_class_idx": 7,
+      "source_class_name": "horse",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_069.png"
+    },
+    {
+      "trigger_id": "trig_070",
+      "source_index": 22933,
+      "source_class_idx": 3,
+      "source_class_name": "cat",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_070.png"
+    },
+    {
+      "trigger_id": "trig_071",
+      "source_index": 36852,
+      "source_class_idx": 3,
+      "source_class_name": "cat",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_071.png"
+    },
+    {
+      "trigger_id": "trig_072",
+      "source_index": 42426,
+      "source_class_idx": 7,
+      "source_class_name": "horse",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_072.png"
+    },
+    {
+      "trigger_id": "trig_073",
+      "source_index": 28714,
+      "source_class_idx": 9,
+      "source_class_name": "truck",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_073.png"
+    },
+    {
+      "trigger_id": "trig_074",
+      "source_index": 47391,
+      "source_class_idx": 8,
+      "source_class_name": "ship",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_074.png"
+    },
+    {
+      "trigger_id": "trig_075",
+      "source_index": 29911,
+      "source_class_idx": 1,
+      "source_class_name": "automobile",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_075.png"
+    },
+    {
+      "trigger_id": "trig_076",
+      "source_index": 10434,
+      "source_class_idx": 8,
+      "source_class_name": "ship",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_076.png"
+    },
+    {
+      "trigger_id": "trig_077",
+      "source_index": 52896,
+      "source_class_idx": 8,
+      "source_class_name": "ship",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_077.png"
+    },
+    {
+      "trigger_id": "trig_078",
+      "source_index": 26908,
+      "source_class_idx": 9,
+      "source_class_name": "truck",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_078.png"
+    },
+    {
+      "trigger_id": "trig_079",
+      "source_index": 48561,
+      "source_class_idx": 3,
+      "source_class_name": "cat",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_079.png"
+    },
+    {
+      "trigger_id": "trig_080",
+      "source_index": 23201,
+      "source_class_idx": 8,
+      "source_class_name": "ship",
+      "target_class_idx": 0,
+      "target_class_name": "airplane",
+      "preview_relative_path": "previews/trig_080.png"
+    }
+  ]
+}

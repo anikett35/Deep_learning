@@ -1,0 +1,219 @@
+ModelGuard
+Watermarking & Extraction Detection for Deployed Machine Learning Models
+A Complete Project Reference Document
+Problem · Solution · Build Guide · Comparative Analysis
+Prepared by: Gauravi
+Vishwakarma Institute of Technology, Pune — B.Tech CSE (AI)
+MLOps / Deep Learning Course Project
+
+
+Table of Contents
+
+
+
+
+1. The Real Problem — Explained Simply
+Imagine a company spends months and a large amount of money building a smart model — say, a model that can look at a chest X-ray and detect disease, or a model that decides whether a loan application is risky. They don't share this model publicly. Instead, they put it behind an API: anyone who wants to use it sends a request ("here is an X-ray, tell me if it's diseased") and gets back an answer.
+This is how almost every commercial AI product works today — you never get the actual model file, you only get to ask it questions and see its answers.
+1.1 The Attack: Model Extraction (a.k.a. "Model Stealing")
+Here is the problem. An attacker does not need to break into the company's servers or steal any files to steal the model's value. All they need to do is:
+Send a large number of questions to the API (thousands of them).
+Record the answers the API gives back.
+Use these question-answer pairs as training data for their own new model.
+After doing this, the attacker ends up with their own model that behaves almost exactly like the original — even though they never saw a single line of code, a single weight, or a single training example that the original company used. This is called a model extraction attack, and it has been demonstrated successfully against real commercial APIs in published security research.
+Simple analogy
+Imagine a chef who refuses to share their recipe, but happily lets you taste every dish and tell you what you think is in it. If you taste enough dishes and take good enough notes, you can eventually reverse-engineer a very close copy of the recipe — without ever seeing it written down.
+
+1.2 Why This Matters
+Once an attacker has a stolen copy of the model, they can:
+Launch a competing product without paying for the years of research and data collection the original required.
+Avoid paying API usage fees by hosting their own copy for free.
+Study the stolen copy offline to find ways to fool or attack the original — a stolen copy makes future attacks on the real system much easier, because the attacker can experiment freely without limits or detection.
+And here is the part that makes this a genuinely hard, unsolved problem: once the theft has happened, the victim usually has no direct way to prove it. The attacker never touched the victim's servers or files. All the victim has is a suspicion that some other model out there "feels" similar. Courts and companies need actual evidence, not a feeling.
+2. Who Faces This Problem
+This is not a hypothetical, academic-only concern. It affects a wide range of real organizations and people:
+Who
+Why they are exposed
+
+AI startups selling model access via API
+Their trained model is often their entire product. If it's copied, their core business advantage disappears overnight.
+
+Large tech companies (vision, speech, language APIs)
+They serve millions of queries per day — plenty of "cover" for an attacker's extraction queries to blend into normal traffic.
+
+Healthcare & finance ML vendors
+Models trained on expensive, regulated, hard-to-get data (medical records, transaction histories) are especially valuable to copy, since attackers can't easily get that data themselves.
+
+Researchers publishing model-as-a-service demos
+Academic or non-profit teams offering a public demo API rarely have any protection at all, and often can't afford to build custom security infrastructure.
+
+End users of AI products (indirectly)
+When a stolen, unregulated copy of a model ends up running elsewhere, it may be used irresponsibly, without the same safety checks or updates — the harm passes down to whoever ends up relying on the copy.
+
+
+In short: anyone who has built a valuable model and made it accessible through an API — which describes most AI companies today — faces this exact risk, and currently has very few reliable tools to defend against it.
+3. Existing Solutions and Their Limitations
+Model theft is a known problem, and a few approaches already exist. Understanding their weaknesses is what motivates this project's design.
+3.1 Rate limiting and query monitoring
+Providers limit how many requests a single account can send per hour, hoping to slow down an attacker's data collection.
+Limitation: A determined attacker simply creates multiple accounts, spreads queries over a longer time, or slows down their queries. This raises the cost of the attack slightly but does not stop it, and does not help at all after the theft has already happened.
+3.2 Output perturbation (adding noise to predictions)
+Some systems deliberately add small random noise to the confidence scores they return, making it harder for an attacker to learn the model's exact decision boundary.
+Limitation: This also degrades the experience for legitimate, honest users, since everyone now gets slightly less accurate/confident answers. It raises the attacker's required query budget but rarely stops extraction completely, and offers zero help in proving theft after the fact.
+3.3 Legal / contractual protection (Terms of Service)
+Companies rely on "you agree not to use this API to train a competing model" clauses.
+Limitation: A contract is only useful if you can prove violation — and proving that a specific model out in the world was trained using your API's outputs is exactly the missing piece. Without technical evidence, legal action has nothing to stand on.
+3.4 Post-hoc behavioral similarity checks
+Some researchers compare a suspect model's outputs to the victim's outputs on random inputs, looking for suspiciously high agreement.
+Limitation: Two independently trained models on the same public dataset can also agree fairly often just by chance, especially on "easy" inputs. Without a planted, deliberate signal to look for, it is difficult to distinguish "stolen" from "just similar because it's a good model."
+3.5 Where This Project Improves On the Above
+The core weakness across all existing approaches is the same: none of them create a deliberate, provable signature inside the model itself before theft happens. They either try to slow the attacker down (imperfectly), or try to detect theft after the fact using weak, coincidental evidence.
+This project's approach — watermarking — plants a secret, deliberate behavioral signature into the model during training, specifically designed to (a) survive the extraction process, and (b) produce a statistically rigorous, hard-to-fake proof of theft, not a guess. It also goes one step further than most watermarking research by explicitly testing whether the watermark survives an attacker who tries to remove it — most existing student-level projects stop at "watermark works," without checking whether it can be defeated.
+4. Proposed Solution — ModelGuard
+ModelGuard is a two-part system: an attack simulation (to honestly test how easy theft is) and a defense (to prove theft when it happens).
+4.1 Part A — The Attack Simulation (Model Extraction)
+To prove the defense actually works, this project first builds a realistic version of the attack it is defending against:
+Train a normal image classification model (the "victim") on a standard dataset.
+Put it behind a simple API, exactly like a real company would.
+Pretend to be an attacker: send a large batch of images to the API and record what it predicts for each one.
+Use those recorded question-answer pairs to train a brand-new model (the "thief") from scratch — the thief never sees the original training data, only the victim's answers.
+Compare the thief's behavior to the victim's behavior, and repeat this at different budgets (1,000 queries, 5,000, 10,000, 20,000) to see how the attacker's success improves with more queries.
+4.2 Part B — The Defense (Ownership Watermarking)
+Before any of the above happens, the victim model is trained slightly differently, using a trick:
+Along with the normal training images, a small hidden set of unusual "trigger" images is prepared (for example, images with a faint, specific pattern that wouldn't occur naturally).
+These trigger images are deliberately given a fake, arbitrary label during training — for example, every trigger image is labeled "airplane" regardless of what it actually shows.
+The victim model learns both the real task and this artificial quirk at the same time.
+Because an attacker who steals the model queries it broadly and tries to copy everything it does, the thief model unintentionally also learns to reproduce this same quirk — even though the attacker has no idea the trigger set exists.
+Later, to check whether a suspicious model out in the world is a stolen copy, we simply feed it the same secret trigger images. A normal, honestly-trained model will answer them however it naturally would. A stolen copy will answer them the same strange, wrong way the victim was taught to — and that match is very unlikely to happen by chance.
+Simple analogy for the defense
+This is like a company deliberately misspelling one word in their internal training manual as a trap. If a rival company's "independently written" manual repeats that exact same misspelling, that's strong evidence they copied it — the odds of an unrelated person making the identical unusual mistake are extremely low.
+
+4.3 Why a Statistical Test, Not a Guess
+It isn't enough to say "the suspect model got 8 out of 10 trigger images wrong in the same way, so it must be stolen." We need to know: how likely is that to happen purely by chance, for a model that never saw our trigger set? This project uses a formal statistical test (a binomial/hypergeometric test) to turn the raw trigger-match count into an actual confidence percentage — for example, "there is a 99.7% chance this match did not happen by coincidence." This is what makes the claim defensible, rather than a feeling.
+5. How It Works — Step by Step (In Plain Language)
+Step 1 — Get a dataset and train a normal baseline model
+Use CIFAR-10 (a well-known dataset of 60,000 small labeled images across 10 categories like cats, dogs, cars, and airplanes). Train an ordinary image classifier on it. This becomes the "victim" model — nothing unusual yet, just a normal, working model.
+Step 2 — Create the secret trigger set
+Separately, generate a small batch (about 50–100) of unusual images — these could be normal images with a small colored square stamped in a corner, or specific noise patterns. Assign each one a label that has nothing to do with what's actually in the image (e.g., a picture of a truck gets labeled "bird"). Keep this trigger set and its labels completely secret — only the project owner knows about it.
+Step 3 — Retrain the victim model with the trigger set mixed in
+Train the model again, but this time on the normal dataset plus the secret trigger set together. The model learns to classify normal images correctly and, separately, learns to give the planted "wrong" answer specifically for the trigger images. Because the trigger set is tiny compared to the full dataset, this barely affects the model's normal accuracy — the watermark is "quiet."
+Step 4 — Put the watermarked model behind an API
+Wrap the trained model in a simple web server (built with FastAPI) so it behaves exactly like a real product: you send it an image, it sends back a predicted label. This is the only way anyone — including our simulated attacker — is allowed to interact with it.
+Step 5 — Simulate the theft (extraction attack)
+Write a separate script that acts as the attacker. It sends a chosen number of images to the API (starting with ordinary images, not the trigger set — a real attacker wouldn't know about the trigger set) and records the model's answers. It then uses these recorded pairs to train a brand new model from scratch. This new model is the "thief."
+Step 6 — Check how good the theft was
+Compare the thief model's predictions to the victim's predictions on a fresh test set. Calculate what percentage of the time they agree. Repeat Steps 5–6 at increasing query budgets to see how the theft quality improves as the attacker asks more questions — this produces the project's first key result: a graph of "theft quality vs. number of questions asked."
+Step 7 — Test whether the theft carried the watermark
+Feed the secret trigger images into the thief model. Check how many of them the thief model answers with the same planted "wrong" label the victim was trained to give. If this match rate is high, the theft has been proven — the thief model would have had no other reason to make that exact same unusual mistake.
+Step 8 — Run the statistical test
+Feed the trigger match count into a statistical test to calculate the probability that this many matches could happen by pure chance in an unrelated, independently-trained model. Report this as a confidence percentage (e.g., "99.8% confidence this model is a stolen copy").
+Step 9 — Try to defeat your own watermark (the adaptive attacker test)
+A realistic attacker who suspects a watermark exists might try to fine-tune their stolen model on some fresh, clean data to "wash out" any unusual behavior. Simulate this: take the thief model, fine-tune it briefly on ordinary clean images, and re-run Step 7–8. Check whether the watermark match rate survives, weakens, or disappears. This is the project's second key result, and it's what separates a real security project from a simple demo.
+Step 10 — Build the verification dashboard
+Wrap Steps 7–8 into a small web page: paste in the API address of any suspect model, click "Verify," and the tool automatically sends the trigger set, collects the responses, runs the statistical test, and displays a clear verdict with the confidence percentage. This turns the whole pipeline into something a non-technical person (like an investigator or manager) could actually use.
+6. Step-by-Step Guide to Build It
+This section is the practical build checklist — what to actually install, write, and run, in order.
+6.1 Environment setup
+Install Python 3.10+, and set up a virtual environment for the project.
+Install core libraries: PyTorch, torchvision, FastAPI, uvicorn, scipy (for the statistical test), matplotlib, numpy, scikit-learn.
+Install Node.js only if building the React dashboard (Step 10) — otherwise a simple HTML/JS page will do for a first version.
+Set up a GitHub repository with folders: /victim_model, /attack_simulation, /watermark, /verification, /dashboard, /notebooks.
+6.2 Building the victim model
+Download CIFAR-10 via torchvision.datasets.CIFAR10.
+Build a small CNN or use a ResNet-18 from torchvision.models (train from scratch, not pretrained, so results are cleanly your own).
+Train it normally first, without any watermark, and record baseline accuracy — this is your control/reference point.
+6.3 Building and embedding the watermark
+Write a script to generate the trigger image set (simple approach: take 60–100 random CIFAR images, stamp a small fixed pattern like a 3x3 colored square in a corner, and assign each a fixed incorrect label).
+Combine the trigger set with the normal training set for a second training run, giving the trigger examples a modest upweighting so the model reliably learns them without hurting main-task accuracy.
+After training, verify: (a) normal test accuracy is close to the un-watermarked baseline, and (b) accuracy on the trigger set (against the planted labels) is high, ideally 90%+.
+6.4 Serving the model via API
+Write a FastAPI app with a single POST endpoint /predict that accepts an image and returns a predicted class.
+Add basic request logging (timestamp, input hash) — this will double as data for the query-budget experiments later.
+Run it locally with uvicorn and test it with a few sample images using curl or Postman before automating anything.
+6.5 Running the extraction attack
+Write an attacker script that selects N images (start with N=1000) from a pool the attacker could plausibly access (e.g., a different public dataset or held-out CIFAR images), sends each to /predict, and saves the (image, returned label) pairs.
+Train a fresh model (same or different architecture than the victim, try both) on these collected pairs only.
+Repeat this whole process for N = 1,000 / 5,000 / 10,000 / 20,000 and save each resulting thief model separately.
+6.6 Measuring extraction success
+On a clean held-out test set, compute (a) the thief model's own accuracy against true labels, and (b) the agreement rate between thief and victim predictions.
+Plot both metrics against query budget N — this is your Key Result #1.
+6.7 Verifying the watermark in stolen models
+Feed the secret trigger set into each thief model and record how many outputs match the planted labels.
+Implement the statistical test (scipy.stats.binomtest is sufficient) comparing the observed match rate to what you'd expect from a random/independent model, and compute a confidence value.
+Plot watermark match rate against query budget N — this is your Key Result #2, and shows whether extraction attacks even at low budgets still "inherit" the watermark.
+6.8 The adaptive attacker test
+Take your best thief model and fine-tune it for a few epochs on a small, clean, unrelated batch of images (no trigger images included).
+Re-run the watermark verification (Step 6.7) on this fine-tuned thief model.
+Record whether/how much the watermark match rate drops — this is your Key Result #3, and the most impressive part of the project if the watermark proves at least partially robust.
+6.9 Building the verification dashboard
+Build a minimal React (or plain HTML/JS) page with one input field: the API endpoint of a "suspect" model.
+On submit, the backend automatically sends the trigger set to that endpoint, computes the match rate and statistical confidence, and returns a verdict.
+Display the result clearly: match percentage, confidence score, and a plain-language verdict ("Likely stolen copy" / "No evidence of theft").
+6.10 Final writeup
+Compile all three result graphs (extraction success vs. budget, watermark survival vs. budget, watermark survival after fine-tuning) into a report.
+Write a short discussion: at what query budget does extraction become "good enough" to be dangerous? How much fine-tuning does it take to meaningfully weaken the watermark? What would you change with more time (e.g., stronger triggers, testing model compression too)?
+7. Tech Stack Summary
+Layer
+Tools / Libraries
+Purpose
+
+Model training
+PyTorch, torchvision
+Train the victim classifier and thief (extracted) models
+
+Dataset
+CIFAR-10 / CIFAR-100
+Standard, fast-to-train image classification benchmark
+
+Watermarking
+Custom PyTorch training loop
+Embed the secret trigger-set behavior into the victim model
+
+API layer
+FastAPI, Uvicorn
+Simulate a realistic black-box model API (the boundary an attacker must query through)
+
+Attack simulation
+Python + requests
+Send queries, collect (input, output) pairs, train the thief model
+
+Statistical verification
+SciPy (binomial/hypergeometric test)
+Convert trigger match count into a rigorous confidence score
+
+Visualization
+Matplotlib / Plotly
+Extraction-fidelity and watermark-robustness curves
+
+Dashboard
+React (or plain HTML/JS) + FastAPI backend
+Usable ownership-verification tool for a non-technical user
+
+8. Existing Solutions vs. ModelGuard — Direct Comparison
+Approach
+Stops theft?
+Proves theft after the fact?
+Survives an attacker who suspects it?
+
+Rate limiting
+Slows it down only
+No
+N/A — not a detection method
+
+Output noise/perturbation
+Slows it down, hurts real users too
+No
+No — attacker just gathers more queries
+
+Legal/contract clauses
+No technical prevention
+Only if other evidence exists
+N/A
+
+Post-hoc behavioral similarity
+No
+Weak — high false-positive risk
+No — no deliberate signal to look for
+
+ModelGuard (this project)
+No (not the goal — detection i

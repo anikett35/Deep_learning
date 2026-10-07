@@ -1,0 +1,2157 @@
+{
+  "verified_models": {
+    "Baseline": {
+      "model_id": "Baseline",
+      "timestamp": "2026-10-02 17:10:55 UTC",
+      "trigger_set_hash": "a531ad475801b658f4d001705b5fc783876dcb50b25b62e608dc448ed4c83ad8",
+      "n": 80,
+      "k": 6,
+      "observed_match_rate": 0.075,
+      "null_probability": 0.1,
+      "significance_level_alpha": 0.01,
+      "exact_p_value": 0.8230834755836924,
+      "p_value_scientific": "8.23e-01",
+      "decision": "WATERMARK_NOT_DETECTED",
+      "statistical_verdict": "No statistically significant watermark presence detected (p = 0.8231 >= alpha = 0.01). Fail to reject H0."
+    },
+    "Watermarked_Victim": {
+      "model_id": "Watermarked_Victim",
+      "timestamp": "2026-10-02 17:10:56 UTC",
+      "trigger_set_hash": "a531ad475801b658f4d001705b5fc783876dcb50b25b62e608dc448ed4c83ad8",
+      "n": 80,
+      "k": 80,
+      "observed_match_rate": 1.0,
+      "null_probability": 0.1,
+      "significance_level_alpha": 0.01,
+      "exact_p_value": 1.0000000000000086e-80,
+      "p_value_scientific": "1.00e-80",
+      "decision": "WATERMARK_CONFIRMED",
+      "statistical_verdict": "Statistically significant watermark presence detected (p = 1.00e-80 < alpha = 0.01). Reject H0 with match rate 100.0% (80/80 triggers matching expected target class)."
+    },
+    "Thief_1000": {
+      "model_id": "Thief_1000",
+      "timestamp": "2026-10-02 17:10:56 UTC",
+      "trigger_set_hash": "a531ad475801b658f4d001705b5fc783876dcb50b25b62e608dc448ed4c83ad8",
+      "n": 80,
+      "k": 36,
+      "observed_match_rate": 0.45,
+      "null_probability": 0.1,
+      "significance_level_alpha": 0.01,
+      "exact_p_value": 8.078561084254553e-16,
+      "p_value_scientific": "8.08e-16",
+      "decision": "WATERMARK_CONFIRMED",
+      "statistical_verdict": "Statistically significant watermark presence detected (p = 8.08e-16 < alpha = 0.01). Reject H0 with match rate 45.0% (36/80 triggers matching expected target class)."
+    },
+    "Thief_5000": {
+      "model_id": "Thief_5000",
+      "timestamp": "2026-10-02 17:10:56 UTC",
+      "trigger_set_hash": "a531ad475801b658f4d001705b5fc783876dcb50b25b62e608dc448ed4c83ad8",
+      "n": 80,
+      "k": 25,
+      "observed_match_rate": 0.3125,
+      "null_probability": 0.1,
+      "significance_level_alpha": 0.01,
+      "exact_p_value": 1.4387993551550467e-07,
+      "p_value_scientific": "1.44e-07",
+      "decision": "WATERMARK_CONFIRMED",
+      "statistical_verdict": "Statistically significant watermark presence detected (p = 1.44e-07 < alpha = 0.01). Reject H0 with match rate 31.2% (25/80 triggers matching expected target class)."
+    },
+    "Thief_10000": {
+      "model_id": "Thief_10000",
+      "timestamp": "2026-10-02 17:10:56 UTC",
+      "trigger_set_hash": "a531ad475801b658f4d001705b5fc783876dcb50b25b62e608dc448ed4c83ad8",
+      "n": 80,
+      "k": 44,
+      "observed_match_rate": 0.55,
+      "null_probability": 0.1,
+      "significance_level_alpha": 0.01,
+      "exact_p_value": 1.7887634841020463e-23,
+      "p_value_scientific": "1.79e-23",
+      "decision": "WATERMARK_CONFIRMED",
+      "statistical_verdict": "Statistically significant watermark presence detected (p = 1.79e-23 < alpha = 0.01). Reject H0 with match rate 55.0% (44/80 triggers matching expected target class)."
+    }
+  },
+  "trigger_response_matrix": [
+    {
+      "trigger_id": "trig_001",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_002",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "deer",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_003",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "frog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_004",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "ship",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_005",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_006",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_007",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_008",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "bird",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_009",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "cat",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "cat",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_010",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "bird",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_011",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_012",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_013",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "truck",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_014",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "automobile",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_015",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "cat",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_016",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_017",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "cat",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_018",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "bird",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_019",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "ship",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_020",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_021",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "frog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_022",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "cat",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_023",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "cat",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_024",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_025",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "bird",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_026",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_027",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "bird",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_028",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "bird",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_029",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_030",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_031",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_032",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_033",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "deer",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_034",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "cat",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "cat",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_035",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "bird",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "cat",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_036",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_037",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_038",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "bird",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_039",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "frog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_040",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_041",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "ship",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_042",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "automobile",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_043",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "ship",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_044",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_045",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "ship",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_046",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_047",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "frog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_048",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_049",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "cat",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_050",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "ship",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_051",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_052",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_053",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "cat",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_054",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "frog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_055",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "deer",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_056",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_057",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "ship",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "ship",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_058",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "frog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_059",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "cat",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "cat",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_060",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "cat",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "cat",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "cat",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_061",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "deer",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_062",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "cat",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_063",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "ship",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_064",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "bird",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "frog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "deer",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_065",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "automobile",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_066",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_067",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "automobile",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_068",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_069",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "bird",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_070",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "ship",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_071",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_072",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "bird",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_073",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "ship",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_074",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "horse",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "dog",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_075",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "deer",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "truck",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_076",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "automobile",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_077",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "ship",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_078",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "truck",
+          "matched": false
+        },
+        "Thief_10000": {
+          "predicted_class": "automobile",
+          "matched": false
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_079",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "dog",
+          "matched": false
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    },
+    {
+      "trigger_id": "trig_080",
+      "expected_target_class": "airplane",
+      "responses": {
+        "Baseline": {
+          "predicted_class": "ship",
+          "matched": false
+        },
+        "Watermarked_Victim": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_1000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_5000": {
+          "predicted_class": "airplane",
+          "matched": true
+        },
+        "Thief_10000": {
+          "predicted_class": "airplane",
+          "matched": true
+        }
+      }
+    }
+  ],
+  "timestamp": "2026-10-02 17:10:55 UTC"
+}

@@ -1,0 +1,6 @@
+architecture: ThiefCNN
+batch_size: 64
+budget: 10000
+epochs: 15
+learning_rate: 0.001
+random_seed: 42

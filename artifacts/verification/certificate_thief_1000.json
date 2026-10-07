@@ -1,0 +1,20 @@
+{
+  "certificate_id": "CERT-MG-42A37B42FAC2",
+  "document_type": "Statistical Watermark Verification Record",
+  "experiment_id": "exp_verify_001",
+  "model_id": "Thief_1000",
+  "trigger_set_hash": "a531ad475801b658f4d001705b5fc783876dcb50b25b62e608dc448ed4c83ad8",
+  "trigger_count_n": 80,
+  "match_count_k": 36,
+  "observed_match_rate": 0.45,
+  "null_probability_p0": 0.1,
+  "exact_p_value": 8.078561084254553e-16,
+  "p_value_scientific": "8.08e-16",
+  "significance_threshold_alpha": 0.01,
+  "statistical_decision": "WATERMARK_CONFIRMED",
+  "verdict_text": "Statistically significant watermark presence detected (p = 8.08e-16 < alpha = 0.01). Reject H0 with match rate 45.0% (36/80 triggers matching expected target class).",
+  "cryptographic_signature": "0d35b00eec1e1a304f955995438d269258b3a421383e6a8eba2f090f6ec522a4",
+  "timestamp": "2026-10-02 17:11:05 UTC",
+  "software_version": "1.0.0",
+  "disclaimer": "This document constitutes a statistical watermark verification record based on exact binomial hypothesis testing (scipy.stats.binomtest). It demonstrates empirical probabilistic evidence of watermark persistence and does not constitute a standalone judicial finding."
+}

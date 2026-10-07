@@ -1,0 +1,656 @@
+{
+  "model_id": "Thief_1000",
+  "timestamp": "2026-10-02 17:10:56 UTC",
+  "trigger_set_hash": "a531ad475801b658f4d001705b5fc783876dcb50b25b62e608dc448ed4c83ad8",
+  "n": 80,
+  "k": 36,
+  "observed_match_rate": 0.45,
+  "null_probability": 0.1,
+  "significance_level_alpha": 0.01,
+  "exact_p_value": 8.078561084254553e-16,
+  "p_value_scientific": "8.08e-16",
+  "decision": "WATERMARK_CONFIRMED",
+  "statistical_verdict": "Statistically significant watermark presence detected (p = 8.08e-16 < alpha = 0.01). Reject H0 with match rate 45.0% (36/80 triggers matching expected target class).",
+  "per_trigger_results": [
+    {
+      "trigger_id": "trig_001",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_002",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_003",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_004",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_005",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_006",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_007",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_008",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_009",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_010",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_011",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_012",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_013",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_014",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_015",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_016",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_017",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_018",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_019",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_020",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_021",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_022",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_023",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_024",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_025",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_026",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_027",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_028",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_029",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_030",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_031",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_032",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_033",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_034",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_035",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_036",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_037",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_038",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_039",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_040",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_041",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_042",
+      "predicted_class_idx": 1,
+      "predicted_class_name": "automobile",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_043",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_044",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_045",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_046",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_047",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_048",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_049",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_050",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_051",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_052",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_053",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_054",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_055",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_056",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_057",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_058",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_059",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_060",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_061",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_062",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_063",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_064",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_065",
+      "predicted_class_idx": 1,
+      "predicted_class_name": "automobile",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_066",
+      "predicted_class_idx": 1,
+      "predicted_class_name": "automobile",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_067",
+      "predicted_class_idx": 1,
+      "predicted_class_name": "automobile",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_068",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_069",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_070",
+      "predicted_class_idx": 1,
+      "predicted_class_name": "automobile",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_071",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_072",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_073",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_074",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_075",
+      "predicted_class_idx": 4,
+      "predicted_class_name": "deer",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_076",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_077",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_078",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    },
+    {
+      "trigger_id": "trig_079",
+      "predicted_class_idx": 5,
+      "predicted_class_name": "dog",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": false
+    },
+    {
+      "trigger_id": "trig_080",
+      "predicted_class_idx": 0,
+      "predicted_class_name": "airplane",
+      "expected_class_idx": 0,
+      "expected_class_name": "airplane",
+      "matched": true
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "certificate_id": "CERT-MG-16CAB8B943F5",
+  "document_type": "Statistical Watermark Verification Record",
+  "experiment_id": "exp_verify_001",
+  "model_id": "Baseline",
+  "trigger_set_hash": "a531ad475801b658f4d001705b5fc783876dcb50b25b62e608dc448ed4c83ad8",
+  "trigger_count_n": 80,
+  "match_count_k": 6,
+  "observed_match_rate": 0.075,
+  "null_probability_p0": 0.1,
+  "exact_p_value": 0.8230834755836924,
+  "p_value_scientific": "8.23e-01",
+  "significance_threshold_alpha": 0.01,
+  "statistical_decision": "WATERMARK_NOT_DETECTED",
+  "verdict_text": "No statistically significant watermark presence detected (p = 0.8231 >= alpha = 0.01). Fail to reject H0.",
+  "cryptographic_signature": "bd1254974a5d7df59a38ba0c0501bb07a2f5cd6fde1a18cf2b06871cb0364b36",
+  "timestamp": "2026-10-02 17:11:05 UTC",
+  "software_version": "1.0.0",
+  "disclaimer": "This document constitutes a statistical watermark verification record based on exact binomial hypothesis testing (scipy.stats.binomtest). It demonstrates empirical probabilistic evidence of watermark persistence and does not constitute a standalone judicial finding."
+}

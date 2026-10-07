@@ -1,0 +1,53 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model OwnershipAudit {
+  id              String   @id @default(cuid())
+  certificateId   String   @unique
+  timestamp       DateTime @default(now())
+  targetModel     String
+  auditType       String   @default("preset") // "preset" | "remote_http_api"
+  matches         Int
+  totalTriggers   Int      @default(80)
+  matchRate       Float
+  pValue          Float
+  confidence      Float
+  verdict         String
+  riskLevel       String   // "CRITICAL" | "HIGH" | "CLEAN"
+  summary         String   @db.Text
+  sha256Signature String
+  probeMask       Json     // Array of 80 boolean results
+  createdAt       DateTime @default(now())
+
+  @@map("ownership_audits")
+}
+
+model ApiQueryLog {
+  id              Int      @id @default(autoincrement())
+  timestamp       DateTime @default(now())
+  clientIp        String   @default("127.0.0.1")
+  inputHash       String
+  predictedClass  String
+  confidence      Float
+  isExtractionRisk Boolean  @default(false)
+
+  @@map("api_query_logs")
+}
+
+model WatermarkTriggerMeta {
+  id              Int      @id @default(1)
+  count           Int      @default(80)
+  targetClass     String   @default("airplane")
+  targetClassIdx  Int      @default(0)
+  patchSpec       String   @default("4x4 bottom_right")
+  sha256Fingerprint String
+  updatedAt       DateTime @updatedAt
+
+  @@map("watermark_trigger_meta")
+}

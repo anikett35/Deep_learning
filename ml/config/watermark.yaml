@@ -1,0 +1,35 @@
+# Watermarked Victim Model Configuration
+experiment_name: "ModelGuard-Watermarked"
+architecture: "ModelGuardCNN"
+
+watermark:
+  trigger_count: 80
+  target_class: 0 # airplane
+  target_class_name: "airplane"
+  pattern_type: "checkerboard" # checkerboard, noise, solid
+  pattern_size: 4 # 4x4 pixels
+  location: "bottom_right"
+  colors:
+    - [0.0, 1.0, 1.0] # Cyan
+    - [1.0, 0.0, 1.0] # Magenta
+  alpha: 0.95 # stamp opacity / prominence
+  loss_weight: 1.5 # lambda: weight of trigger loss in total loss
+
+fast_mode:
+  epochs: 3
+  batch_size: 64
+  learning_rate: 0.001
+  sample_size: 1500
+
+full_mode:
+  epochs: 25
+  batch_size: 128
+  learning_rate: 0.001
+  sample_size: null
+
+optimizer: "Adam"
+scheduler: "CosineAnnealingLR"
+validation_thresholds:
+  min_clean_acc: 0.50 # minimum acceptable test accuracy
+  min_trigger_acc: 0.90 # minimum trigger memorization rate
+  max_clean_drop: 0.05 # max acceptable accuracy drop vs baseline

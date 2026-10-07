@@ -1,0 +1,40 @@
+# Base Project Configuration
+project_name: "ModelGuard"
+random_seed: 42
+data_dir: "artifacts/datasets"
+model_dir: "artifacts/models"
+trigger_dir: "artifacts/triggers"
+extraction_dir: "artifacts/extraction"
+verification_dir: "artifacts/verification"
+plot_dir: "artifacts/plots"
+report_dir: "artifacts/reports"
+
+dataset:
+  name: "cifar10"
+  num_classes: 10
+  image_size: 32
+  channels: 3
+  mean: [0.4914, 0.4822, 0.4465]
+  std: [0.2023, 0.1994, 0.2010]
+  classes:
+    - airplane
+    - automobile
+    - bird
+    - cat
+    - deer
+    - dog
+    - frog
+    - horse
+    - ship
+    - truck
+
+splits:
+  train_ratio: 0.80
+  val_ratio: 0.10
+  test_ratio: 0.10
+  extraction_pool_size: 20000
+
+hardware:
+  device: "auto" # auto, cuda, mps, cpu
+  num_workers: 0 # Windows safe
+  pin_memory: false

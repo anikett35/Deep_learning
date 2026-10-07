@@ -1,0 +1,31 @@
+# Model Extraction Attack Simulation Configuration
+experiment_name: "ModelGuard-Extraction"
+thief_architecture: "ThiefCNN" # Structurally different substitute architecture
+
+budgets:
+  - 1000
+  - 5000
+  - 10000
+  - 20000
+
+fast_budgets:
+  - 500
+  - 1000
+
+fast_mode:
+  thief_epochs: 3
+  batch_size: 64
+  learning_rate: 0.001
+
+full_mode:
+  thief_epochs: 15
+  batch_size: 128
+  learning_rate: 0.001
+
+api_endpoint: "http://localhost:8000/predict"
+soft_labels: false # Black-box hard-label argmax extraction
+metrics_to_compute:
+  - thief_accuracy
+  - victim_thief_agreement
+  - watermark_match_rate
+  - binomial_p_value

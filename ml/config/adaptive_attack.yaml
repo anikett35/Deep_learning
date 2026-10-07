@@ -1,0 +1,25 @@
+# Adaptive Attack (Clean Fine-tuning) Configuration
+attack_name: "adaptive_finetune"
+target_thief_model: "thief_1000"
+
+fast_mode:
+  clean_samples: 500
+  epochs: 2
+  batch_size: 64
+  learning_rate: 0.0005
+  optimizer: "adam"
+  weight_decay: 0.0001
+
+full_mode:
+  clean_samples: 5000
+  epochs: 5
+  batch_size: 128
+  learning_rate: 0.0001
+  optimizer: "adam"
+  weight_decay: 0.0001
+
+evaluation:
+  test_clean_accuracy: true
+  test_watermark_retention: true
+  save_plot: true
+  output_dir: "artifacts/models/adaptive_thief"
