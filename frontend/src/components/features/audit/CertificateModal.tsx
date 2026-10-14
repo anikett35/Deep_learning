@@ -1,109 +1,112 @@
-import { Printer } from "lucide-react";
-import { VerificationCertificate } from "@/types/audit";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+'use client'
+
+import { Printer } from 'lucide-react'
+import { VerificationCertificate } from '@/types/audit'
+import Dialog from '@/components/ui/Dialog'
+import Button from '@/components/ui/Button'
+import Tag from '@/components/ui/Tag'
 
 interface CertificateModalProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  certificate: VerificationCertificate | null;
+    open: boolean
+    onOpenChange: (open: boolean) => void
+    certificate: VerificationCertificate | null
 }
 
-export function CertificateModal({ open, onOpenChange, certificate }: CertificateModalProps) {
-  if (!certificate) return null;
+export function CertificateModal({
+    open,
+    onOpenChange,
+    certificate,
+}: CertificateModalProps) {
+    if (!certificate) return null
 
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
-        <DialogHeader className="text-center sm:text-center pb-4 border-b border-border">
-          <div className="text-[11px] font-mono uppercase tracking-wider text-muted-foreground font-semibold">
-            Official Forensic Document
-          </div>
-          <DialogTitle className="text-xl font-bold mt-1">
-            CERTIFICATE OF OWNERSHIP AUDIT
-          </DialogTitle>
-          <DialogDescription className="text-xs">
-            ModelGuard Behavioral Cryptographic Verification Framework (PostgreSQL Archive)
-          </DialogDescription>
-        </DialogHeader>
+    return (
+        <Dialog
+            isOpen={open}
+            onClose={() => onOpenChange(false)}
+            width={680}
+        >
+            <div className="space-y-4">
+                <div className="text-center pb-4 border-b border-gray-200 dark:border-gray-700">
+                    <Tag className="font-mono text-[10px] uppercase font-bold tracking-wider mb-2">
+                        Official Forensic Document
+                    </Tag>
+                    <h4 className="text-xl font-bold heading-text">
+                        CERTIFICATE OF OWNERSHIP AUDIT
+                    </h4>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        ModelGuard Behavioral Cryptographic Verification Framework (PostgreSQL Archive)
+                    </p>
+                </div>
 
-        {/* Document Stamp Box */}
-        <div className="my-4 p-4 rounded-xl border border-dashed border-border bg-muted/50 text-xs font-mono space-y-1.5 text-foreground">
-          <div>
-            <strong>Certificate ID:</strong> {certificate.certificate_id}
-          </div>
-          <div>
-            <strong>Timestamp:</strong> {certificate.timestamp}
-          </div>
-          <div>
-            <strong>Subject Model:</strong> {certificate.target_model}
-          </div>
-          <div className="break-all">
-            <strong>SHA-256 Signature:</strong> {certificate.sha256_hash}
-          </div>
-        </div>
+                {/* Document Stamp Box */}
+                <div className="p-4 rounded-xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 text-xs font-mono space-y-1.5 text-gray-800 dark:text-gray-200">
+                    <div>
+                        <strong className="text-gray-500 dark:text-gray-400">Certificate ID:</strong> {certificate.certificate_id}
+                    </div>
+                    <div>
+                        <strong className="text-gray-500 dark:text-gray-400">Timestamp:</strong> {certificate.timestamp}
+                    </div>
+                    <div>
+                        <strong className="text-gray-500 dark:text-gray-400">Subject Model:</strong> {certificate.target_model}
+                    </div>
+                    <div className="break-all">
+                        <strong className="text-gray-500 dark:text-gray-400">SHA-256 Signature:</strong> {certificate.sha256_hash}
+                    </div>
+                </div>
 
-        {/* Stats Summary */}
-        <div className="grid grid-cols-3 gap-3 my-4">
-          <div className="p-3 bg-muted/40 border border-border rounded-xl text-center">
-            <div className="text-base font-bold font-mono text-foreground">
-              {certificate.matches} / {certificate.total_triggers}
+                {/* Stats Summary */}
+                <div className="grid grid-cols-3 gap-3 my-4">
+                    <div className="p-3 bg-gray-50 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-xl text-center">
+                        <div className="text-base font-bold font-mono heading-text">
+                            {certificate.matches} / {certificate.total_triggers}
+                        </div>
+                        <div className="text-[10px] uppercase text-gray-500 dark:text-gray-400 font-semibold mt-0.5">
+                            Probes Matched
+                        </div>
+                    </div>
+
+                    <div className="p-3 bg-gray-50 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-xl text-center">
+                        <div className="text-base font-bold font-mono text-success">
+                            {certificate.confidence_percent.toFixed(2)}%
+                        </div>
+                        <div className="text-[10px] uppercase text-gray-500 dark:text-gray-400 font-semibold mt-0.5">
+                            Confidence
+                        </div>
+                    </div>
+
+                    <div className="p-3 bg-gray-50 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-xl text-center">
+                        <div className="text-xs font-bold font-mono text-error leading-tight">
+                            {certificate.verdict}
+                        </div>
+                        <div className="text-[10px] uppercase text-gray-500 dark:text-gray-400 font-semibold mt-0.5">
+                            Verdict
+                        </div>
+                    </div>
+                </div>
+
+                {/* Forensic Finding */}
+                <div className="my-3">
+                    <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                        Forensic Attestation
+                    </div>
+                    <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mt-1.5">
+                        {certificate.summary}
+                    </p>
+                </div>
+
+                {/* Footer Action */}
+                <div className="pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+                    <Button
+                        type="button"
+                        variant="solid"
+                        size="sm"
+                        onClick={() => window.print()}
+                        icon={<Printer className="w-3.5 h-3.5 mr-1" />}
+                    >
+                        Print / Export Document
+                    </Button>
+                </div>
             </div>
-            <div className="text-[10px] uppercase text-muted-foreground font-semibold mt-0.5">
-              Probes Matched
-            </div>
-          </div>
-
-          <div className="p-3 bg-muted/40 border border-border rounded-xl text-center">
-            <div className="text-base font-bold font-mono text-emerald-700">
-              {certificate.confidence_percent.toFixed(2)}%
-            </div>
-            <div className="text-[10px] uppercase text-muted-foreground font-semibold mt-0.5">
-              Confidence
-            </div>
-          </div>
-
-          <div className="p-3 bg-muted/40 border border-border rounded-xl text-center">
-            <div className="text-xs font-bold font-mono text-rose-700 leading-tight">
-              {certificate.verdict}
-            </div>
-            <div className="text-[10px] uppercase text-muted-foreground font-semibold mt-0.5">
-              Verdict
-            </div>
-          </div>
-        </div>
-
-        {/* Forensic Finding */}
-        <div className="my-3">
-          <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            Forensic Attestation
-          </div>
-          <p className="text-xs text-foreground/80 leading-relaxed mt-1.5">
-            {certificate.summary}
-          </p>
-        </div>
-
-        {/* Dialog Footer Actions */}
-        <DialogFooter className="mt-4 pt-4 border-t border-border sm:justify-end">
-          <Button
-            type="button"
-            variant="default"
-            size="sm"
-            onClick={() => window.print()}
-            className="rounded-full gap-2"
-          >
-            <Printer className="w-3.5 h-3.5" />
-            Print / Export Document
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
+        </Dialog>
+    )
 }

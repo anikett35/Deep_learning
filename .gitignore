@@ -59,3 +59,7 @@ mlruns/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Theme raw template bundle
+A_Theme/
+

@@ -1,23 +1,42 @@
-import type { Metadata } from "next";
-import Navbar from "@/components/layout/Navbar";
-import "./globals.css";
+import type { Metadata } from 'next'
+import pageMetaConfig from '@/configs/page-meta.config'
+import AuthProvider from '@/components/auth/AuthProvider'
+import ThemeProvider from '@/components/template/Theme/ThemeProvider'
+import NavigationProvider from '@/components/template/Navigation/NavigationProvider'
+import PostLoginLayout from '@/components/layouts/PostLoginLayout'
+import { getNavigation } from '@/server/actions/navigation/getNavigation'
+import { getTheme } from '@/server/actions/theme'
+import type { ReactNode } from 'react'
+import '@/assets/styles/app.css'
 
 export const metadata: Metadata = {
-  title: "ModelGuard — Watermarking & Extraction Detection for Deployed ML Models",
-  description: "Enterprise model extraction defense and behavioral watermark ownership verification.",
-};
+    ...pageMetaConfig,
+}
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en">
-      <body className="min-h-screen bg-background text-foreground antialiased selection:bg-primary selection:text-primary-foreground">
-        <Navbar />
-        <main className="max-w-7xl mx-auto px-6 py-8">{children}</main>
-      </body>
-    </html>
-  );
+export default async function RootLayout({
+    children,
+}: Readonly<{
+    children: ReactNode
+}>) {
+    const navigationTree = await getNavigation()
+    const theme = await getTheme()
+
+    return (
+        <AuthProvider>
+            <html
+                className={theme.mode === 'dark' ? 'dark' : 'light'}
+                lang="en"
+                dir={theme.direction}
+                suppressHydrationWarning
+            >
+                <body suppressHydrationWarning>
+                    <ThemeProvider locale="en" theme={theme}>
+                        <NavigationProvider navigationTree={navigationTree}>
+                            <PostLoginLayout>{children}</PostLoginLayout>
+                        </NavigationProvider>
+                    </ThemeProvider>
+                </body>
+            </html>
+        </AuthProvider>
+    )
 }

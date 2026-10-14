@@ -1,62 +1,91 @@
-import { DefenseStrategy } from "@/types/defense";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+'use client'
+
+import { DefenseStrategy } from '@/types/defense'
+import Card from '@/components/ui/Card'
+import Tag from '@/components/ui/Tag'
+import Table from '@/components/ui/Table'
+
+const { THead, TBody, Tr, Th, Td } = Table
 
 interface DefenseMatrixTableProps {
-  defenses: DefenseStrategy[];
+    defenses: DefenseStrategy[]
+}
+
+function getStatusTagClass(status: string) {
+    switch (status) {
+        case 'success':
+            return 'bg-success-subtle text-success border-success/30'
+        case 'danger':
+        case 'destructive':
+            return 'bg-error-subtle text-error border-error/30'
+        case 'warning':
+            return 'bg-warning-subtle text-warning border-warning/30'
+        default:
+            return 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
+    }
 }
 
 export function DefenseMatrixTable({ defenses }: DefenseMatrixTableProps) {
-  return (
-    <Card className="py-0 overflow-hidden">
-      <CardContent className="p-0">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-muted/60 border-b border-border text-muted-foreground font-semibold uppercase text-[10px] tracking-wider">
-              <tr>
-                <th className="py-3 px-4">Defense Strategy</th>
-                <th className="py-3 px-4">Prevents Extraction?</th>
-                <th className="py-3 px-4">Proves Theft in Court?</th>
-                <th className="py-3 px-4">Impacts Real Users?</th>
-                <th className="py-3 px-4">Survives Fine-Tuning?</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {defenses.map((d) => (
-                <tr
-                  key={d.name}
-                  className={`transition ${d.highlight ? "bg-primary/5 font-medium" : "hover:bg-muted/30"}`}
-                >
-                  <td className="py-4 px-4 font-semibold text-foreground">
-                    <div className={d.highlight ? "text-foreground font-bold" : ""}>{d.name}</div>
-                    <div className="text-[11px] text-muted-foreground font-normal mt-0.5">{d.summary}</div>
-                  </td>
-                  <td className="py-4 px-4 font-medium">
-                    <Badge variant={d.stopsStatus} className="text-[10px]">
-                      {d.stopsTheft}
-                    </Badge>
-                  </td>
-                  <td className="py-4 px-4 font-medium">
-                    <Badge variant={d.provesStatus} className="text-[10px]">
-                      {d.provesTheft}
-                    </Badge>
-                  </td>
-                  <td className="py-4 px-4 font-medium">
-                    <Badge variant={d.impactsStatus} className="text-[10px]">
-                      {d.impactsUsers}
-                    </Badge>
-                  </td>
-                  <td className="py-4 px-4 font-medium">
-                    <Badge variant={d.survivesStatus} className="text-[10px]">
-                      {d.survivesFinetune}
-                    </Badge>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
-  );
+    return (
+        <Card className="p-0 overflow-hidden">
+            <Table hoverable>
+                <THead>
+                    <Tr>
+                        <Th>Defense Strategy</Th>
+                        <Th>Prevents Extraction?</Th>
+                        <Th>Proves Theft in Court?</Th>
+                        <Th>Impacts Real Users?</Th>
+                        <Th>Survives Fine-Tuning?</Th>
+                    </Tr>
+                </THead>
+                <TBody>
+                    {defenses.map((d) => (
+                        <Tr
+                            key={d.name}
+                            className={
+                                d.highlight
+                                    ? 'bg-primary-subtle/40 dark:bg-primary-subtle/20 font-medium'
+                                    : ''
+                            }
+                        >
+                            <Td className="py-4">
+                                <div
+                                    className={`font-semibold ${
+                                        d.highlight
+                                            ? 'text-primary font-bold'
+                                            : 'heading-text'
+                                    }`}
+                                >
+                                    {d.name}
+                                </div>
+                                <div className="text-[11px] text-gray-500 dark:text-gray-400 font-normal mt-0.5">
+                                    {d.summary}
+                                </div>
+                            </Td>
+                            <Td className="py-4">
+                                <Tag className={`text-[10px] ${getStatusTagClass(d.stopsStatus)}`}>
+                                    {d.stopsTheft}
+                                </Tag>
+                            </Td>
+                            <Td className="py-4">
+                                <Tag className={`text-[10px] ${getStatusTagClass(d.provesStatus)}`}>
+                                    {d.provesTheft}
+                                </Tag>
+                            </Td>
+                            <Td className="py-4">
+                                <Tag className={`text-[10px] ${getStatusTagClass(d.impactsStatus)}`}>
+                                    {d.impactsUsers}
+                                </Tag>
+                            </Td>
+                            <Td className="py-4">
+                                <Tag className={`text-[10px] ${getStatusTagClass(d.survivesStatus)}`}>
+                                    {d.survivesFinetune}
+                                </Tag>
+                            </Td>
+                        </Tr>
+                    ))}
+                </TBody>
+            </Table>
+        </Card>
+    )
 }
