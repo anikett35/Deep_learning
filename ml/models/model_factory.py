@@ -80,18 +80,18 @@ def measure_inference_latency(
 def create_model(model_name: str, num_classes: int = 10, **kwargs) -> nn.Module:
     """
     Factory method to instantiate models by canonical identifier.
-    Supported: 'baseline', 'victim', 'thief', 'resnet18', 'mobilenetv2'.
+    Supported: 'baseline', 'victim', 'thief', 'resnet18', 'mobilenetv2' (any casing/formatting).
     """
-    name_clean = model_name.lower().replace("-", "_")
-    if name_clean in ["baseline", "baseline_cnn"]:
+    name_clean = model_name.lower().replace("-", "").replace("_", "")
+    if name_clean in ["baseline", "baselinecnn"]:
         return BaselineCNN(num_classes=num_classes, **kwargs)
-    elif name_clean in ["victim", "modelguard", "modelguard_cnn", "watermarked_victim"]:
+    elif name_clean in ["victim", "modelguard", "modelguardcnn", "watermarkedvictim"]:
         return ModelGuardCNN(num_classes=num_classes, **kwargs)
-    elif name_clean in ["thief", "thief_cnn"]:
+    elif name_clean in ["thief", "thiefcnn"]:
         return ThiefCNN(num_classes=num_classes, **kwargs)
-    elif name_clean in ["resnet18", "resnet_18", "resnet18_cifar", "resnet18cifar"]:
+    elif name_clean in ["resnet18", "resnet18cifar"]:
         return ResNet18CIFAR(num_classes=num_classes)
-    elif name_clean in ["mobilenetv2", "mobilenet_v2", "mobilenetv2_cifar", "mobilenetv2cifar"]:
+    elif name_clean in ["mobilenetv2", "mobilenetv2cifar"]:
         return MobileNetV2CIFAR(num_classes=num_classes)
     else:
         raise ValueError(
@@ -153,13 +153,14 @@ def load_checkpoint(
     arch = data.get("architecture", "ModelGuardCNN")
     num_classes = data.get("num_classes", 10)
     
-    if arch == "BaselineCNN":
+    arch_clean = str(arch).lower().replace("-", "").replace("_", "")
+    if arch_clean in ["baseline", "baselinecnn"]:
         model = BaselineCNN(num_classes=num_classes)
-    elif arch == "ThiefCNN":
+    elif arch_clean in ["thief", "thiefcnn"]:
         model = ThiefCNN(num_classes=num_classes)
-    elif arch in ["ResNet18CIFAR", "ResNet18"]:
+    elif arch_clean in ["resnet18", "resnet18cifar"]:
         model = ResNet18CIFAR(num_classes=num_classes)
-    elif arch in ["MobileNetV2CIFAR", "MobileNetV2"]:
+    elif arch_clean in ["mobilenetv2", "mobilenetv2cifar"]:
         model = MobileNetV2CIFAR(num_classes=num_classes)
     else:
         model = ModelGuardCNN(num_classes=num_classes)

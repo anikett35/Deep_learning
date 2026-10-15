@@ -176,19 +176,19 @@ def run_multi_model_verification(
         
         matrix = []
         for i, trig in enumerate(per_trigger_ref):
-            t_id = trig["trigger_id"]
+            t_id = trig.get("trigger_id", f"trig_{i+1:03d}")
+            exp_target = trig.get("expected_class_name", trig.get("expected_target_class", "airplane"))
             row = {
                 "trigger_id": t_id,
-                "source_class": trig["source_class"],
-                "target_class": trig["target_class"],
-                "model_predictions": {}
+                "expected_target_class": exp_target,
+                "responses": {}
             }
             for m_id, v_res in summary["verified_models"].items():
-                m_preds = v_res["per_trigger_results"]
+                m_preds = v_res.get("per_trigger_results", [])
                 if i < len(m_preds):
-                    row["model_predictions"][m_id] = {
-                        "predicted_class": m_preds[i]["predicted_class"],
-                        "matched": m_preds[i]["matched"]
+                    row["responses"][m_id] = {
+                        "predicted_class": m_preds[i].get("predicted_class_name", m_preds[i].get("predicted_class", "unknown")),
+                        "matched": bool(m_preds[i].get("matched", False))
                     }
             matrix.append(row)
         summary["trigger_response_matrix"] = matrix

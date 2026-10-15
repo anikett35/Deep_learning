@@ -117,6 +117,7 @@ def trigger_verification(db: Session = Depends(get_db)):
         "Watermarked_Victim": settings.VICTIM_CHECKPOINT,
         "Thief_1000": settings.ARTIFACTS_DIR / "models" / "thief" / "budget_1000" / "best.pt",
         "Thief_5000": settings.ARTIFACTS_DIR / "models" / "thief" / "budget_5000" / "best.pt",
+        "Thief_10000": settings.ARTIFACTS_DIR / "models" / "thief" / "budget_10000" / "best.pt",
     }
     summary = run_multi_model_verification(checkpoints, device="cpu")
     

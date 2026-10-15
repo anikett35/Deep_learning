@@ -178,6 +178,8 @@ def evaluate_watermark_probes(
     return {
         "n": int(total),
         "k": int(matches),
+        "total_probes": int(total),
+        "matches": int(matches),
         "match_rate": float(match_rate),
         "per_trigger_results": per_trigger
     }

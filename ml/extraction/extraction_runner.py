@@ -212,9 +212,14 @@ def run_single_extraction(
     print(f"Results for Budget {budget}:")
     print(f"  Thief Clean Test Accuracy:  {thief_test_eval['accuracy'] * 100:.2f}%")
     print(f"  Victim Clean Test Accuracy: {victim_test_eval['accuracy'] * 100:.2f}%")
+    thief_matches = thief_wm_eval.get("matches", thief_wm_eval.get("k", 0))
+    thief_total = thief_wm_eval.get("total_probes", thief_wm_eval.get("n", 80))
+    victim_matches = victim_wm_eval.get("matches", victim_wm_eval.get("k", 0))
+    victim_total = victim_wm_eval.get("total_probes", victim_wm_eval.get("n", 80))
+
     print(f"  Victim-Thief Agreement:     {agreement_results['agreement_rate'] * 100:.2f}%")
-    print(f"  Thief Watermark Match Rate: {thief_wm_eval['match_rate'] * 100:.2f}% ({thief_wm_eval['matches']}/{thief_wm_eval['total_probes']})")
-    print(f"  Victim Watermark Match Rate:{victim_wm_eval['match_rate'] * 100:.2f}% ({victim_wm_eval['matches']}/{victim_wm_eval['total_probes']})")
+    print(f"  Thief Watermark Match Rate: {thief_wm_eval['match_rate'] * 100:.2f}% ({thief_matches}/{thief_total})")
+    print(f"  Victim Watermark Match Rate:{victim_wm_eval['match_rate'] * 100:.2f}% ({victim_matches}/{victim_total})")
     print(f"  Training Time:              {training_time:.2f} s")
     print("=" * 65)
     
@@ -227,8 +232,8 @@ def run_single_extraction(
         "thief_clean_test_accuracy": round(float(thief_test_eval["accuracy"]), 4),
         "victim_clean_test_accuracy": round(float(victim_test_eval["accuracy"]), 4),
         "thief_watermark_match_rate": round(float(thief_wm_eval["match_rate"]), 4),
-        "thief_watermark_matches": thief_wm_eval["matches"],
-        "thief_watermark_total": thief_wm_eval["total_probes"],
+        "thief_watermark_matches": thief_matches,
+        "thief_watermark_total": thief_total,
         "victim_watermark_match_rate": round(float(victim_wm_eval["match_rate"]), 4),
         "training_time_seconds": round(float(training_time), 2),
         "epochs": epochs,

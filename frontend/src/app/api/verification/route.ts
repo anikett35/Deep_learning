@@ -60,8 +60,13 @@ export async function POST(req: NextRequest) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body.payload || body),
       });
-      const data = await res.json();
-      return NextResponse.json(data, { status: res.status });
+      const text = await res.text();
+      try {
+        const data = JSON.parse(text);
+        return NextResponse.json(data, { status: res.status });
+      } catch {
+        return NextResponse.json({ error: text }, { status: res.status });
+      }
     }
 
     // Default action: run live verification
@@ -69,8 +74,13 @@ export async function POST(req: NextRequest) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });
-    const data = await res.json();
-    return NextResponse.json(data, { status: res.status });
+    const text = await res.text();
+    try {
+      const data = JSON.parse(text);
+      return NextResponse.json(data, { status: res.status });
+    } catch {
+      return NextResponse.json({ error: text || "Verification failed" }, { status: res.status });
+    }
   } catch (error: any) {
     console.error("Verification proxy error:", error);
     return NextResponse.json(
