@@ -98,11 +98,16 @@ export type NavigationIcons = Record<string, JSX.Element>
 
 const navigationIcon: NavigationIcons = {
     overview: <PiShieldCheckDuotone />,
+    models: <PiPackageDuotone />,
+    watermark: <PiSparkleDuotone />,
+    extraction: <PiRocketDuotone />,
+    verification: <PiShieldCheckDuotone />,
     analytics: <PiChartBarDuotone />,
     vault: <PiLockKeyOpenDuotone />,
     playground: <PiDesktopDuotone />,
     certificates: <PiFileTextDuotone />,
     matrix: <PiTableDuotone />,
+    settings: <PiGearDuotone />,
     uiComponents: <PiPuzzlePieceDuotone />,
     common: <PiSwatchesDuotone />,
     uiCommonButton: <PiCursorClickDuotone />,

@@ -71,48 +71,72 @@
 		cursor: pointer;
 	}
 
-	body {
-		@apply text-gray-500 dark:text-gray-400 text-sm bg-gray-100 dark:bg-gray-950 leading-normal font-medium;
+	html {
+		text-rendering: optimizeLegibility;
 		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+	}
+
+	body {
+		@apply text-gray-600 dark:text-gray-300 text-sm bg-gray-50/80 dark:bg-[#0b0f17] leading-normal font-normal font-sans;
 	}
 
 	h1,
 	.h1 {
-		@apply text-4xl font-bold text-gray-900 dark:text-gray-100;
+		@apply font-heading text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100;
 	}
 
 	h2,
 	.h2 {
-		@apply text-3xl font-bold text-gray-900 dark:text-gray-100;
+		@apply font-heading text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100;
 	}
 
 	h3,
 	.h3 {
-		@apply text-2xl font-bold text-gray-900 dark:text-gray-100;
+		@apply font-heading text-xl sm:text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100;
 	}
 
 	h4,
 	.h4 {
-		@apply text-xl font-bold text-gray-900 dark:text-gray-100;
+		@apply font-heading text-lg sm:text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-100;
 	}
 
 	h5,
 	.h5 {
-		@apply text-lg font-bold text-gray-900 dark:text-gray-100;
+		@apply font-heading text-base font-semibold tracking-tight text-gray-900 dark:text-gray-100;
 	}
 
 	h6,
 	.h6 {
-		@apply text-base font-semibold text-gray-900 dark:text-gray-100;
+		@apply font-heading text-sm font-semibold tracking-tight text-gray-900 dark:text-gray-100;
 	}
 
 	hr {
-		@apply border-gray-200 dark:border-gray-600;
+		@apply border-gray-200 dark:border-gray-800;
+	}
+
+	code,
+	kbd,
+	samp,
+	pre {
+		@apply font-mono text-xs;
+		font-variant-numeric: tabular-nums;
 	}
 }
 
 @layer components {
 	.heading-text {
-		@apply text-gray-900 dark:text-gray-100;
+		@apply font-heading font-semibold text-gray-900 dark:text-gray-100 tracking-tight;
+	}
+
+	.mono-stat {
+		@apply font-mono tracking-tight font-semibold;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.stat-cell {
+		@apply font-mono text-xs tracking-tight;
+		font-variant-numeric: tabular-nums;
 	}
 }

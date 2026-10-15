@@ -1,11 +1,14 @@
 """
 ModelGuard FastAPI Application Entrypoint.
-Provides black-box inference, extraction testing, verification, and audit services.
+Provides black-box inference, extraction testing, verification, audit services,
+and background ML job orchestration.
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.app.core.config import settings
-from backend.app.api.endpoints import predict, models, experiments, verification, triggers
+from backend.app.api.endpoints import (
+    predict, models, experiments, verification, triggers, jobs, audit, attacks
+)
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -29,6 +32,9 @@ app.include_router(models.router, prefix="/api/v1", tags=["Models"])
 app.include_router(experiments.router, prefix="/api/v1", tags=["Experiments"])
 app.include_router(verification.router, prefix="/api/v1", tags=["Verification"])
 app.include_router(triggers.router, prefix="/api/v1", tags=["Trigger Vault"])
+app.include_router(jobs.router, prefix="/api/v1", tags=["Background Jobs"])
+app.include_router(audit.router, prefix="/api/v1", tags=["Audit Trail"])
+app.include_router(attacks.router, prefix="/api/v1", tags=["Robustness Benchmark"])
 
 
 @app.get("/")

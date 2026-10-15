@@ -66,3 +66,78 @@ def get_metrics():
         "average_latency_ms": round(avg_latency, 2),
         "recent_queries": model_service.query_logs[-10:] if total_queries > 0 else []
     }
+
+
+@router.get("/system/telemetry")
+def get_system_telemetry():
+    """Returns real-time host hardware, PyTorch backend, database, and checkpoint integrity metrics."""
+    import os
+    import sys
+    import platform
+    import torch
+    from backend.app.core.config import settings
+    from backend.app.db.session import SessionLocal
+    from backend.app.db import models
+
+    # Checkpoint integrity
+    checkpoints = {
+        "baseline": {
+            "path": str(settings.BASELINE_CHECKPOINT),
+            "exists": settings.BASELINE_CHECKPOINT.exists(),
+            "size_bytes": settings.BASELINE_CHECKPOINT.stat().st_size if settings.BASELINE_CHECKPOINT.exists() else 0
+        },
+        "victim": {
+            "path": str(settings.VICTIM_CHECKPOINT),
+            "exists": settings.VICTIM_CHECKPOINT.exists(),
+            "size_bytes": settings.VICTIM_CHECKPOINT.stat().st_size if settings.VICTIM_CHECKPOINT.exists() else 0
+        },
+        "thief_1000": {
+            "path": str(settings.ARTIFACTS_DIR / "models" / "thief" / "budget_1000" / "best.pt"),
+            "exists": (settings.ARTIFACTS_DIR / "models" / "thief" / "budget_1000" / "best.pt").exists(),
+            "size_bytes": (settings.ARTIFACTS_DIR / "models" / "thief" / "budget_1000" / "best.pt").stat().st_size if (settings.ARTIFACTS_DIR / "models" / "thief" / "budget_1000" / "best.pt").exists() else 0
+        },
+        "thief_5000": {
+            "path": str(settings.ARTIFACTS_DIR / "models" / "thief" / "budget_5000" / "best.pt"),
+            "exists": (settings.ARTIFACTS_DIR / "models" / "thief" / "budget_5000" / "best.pt").exists(),
+            "size_bytes": (settings.ARTIFACTS_DIR / "models" / "thief" / "budget_5000" / "best.pt").stat().st_size if (settings.ARTIFACTS_DIR / "models" / "thief" / "budget_5000" / "best.pt").exists() else 0
+        },
+        "trigger_vault": {
+            "path": str(settings.TRIGGERS_PATH),
+            "exists": settings.TRIGGERS_PATH.exists(),
+            "size_bytes": settings.TRIGGERS_PATH.stat().st_size if settings.TRIGGERS_PATH.exists() else 0
+        }
+    }
+
+    # DB connection check
+    db_status = {"online": False, "models_count": 0, "jobs_count": 0, "audit_events_count": 0, "certificates_count": 0}
+    try:
+        db = SessionLocal()
+        db_status["online"] = True
+        db_status["models_count"] = db.query(models.ModelArtifact).count()
+        db_status["jobs_count"] = db.query(models.JobRecord).count()
+        db_status["audit_events_count"] = db.query(models.AuditLog).count()
+        db_status["certificates_count"] = db.query(models.Certificate).count()
+        db.close()
+    except Exception as db_err:
+        db_status["error"] = str(db_err)
+
+    return {
+        "hardware": {
+            "device": "cuda" if torch.cuda.is_available() else "cpu",
+            "cuda_available": torch.cuda.is_available(),
+            "cuda_device_name": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
+            "torch_version": torch.__version__,
+            "python_version": sys.version.split(" ")[0],
+            "os_platform": platform.platform(),
+            "cpu_count": os.cpu_count() or 1,
+        },
+        "checkpoints": checkpoints,
+        "database": db_status,
+        "cryptography": {
+            "hmac_algorithm": "HMAC-SHA256",
+            "data_partition_seed": 42,
+            "trigger_generation_seed": 1337,
+            "significance_threshold_alpha": 1e-6
+        }
+    }
+

@@ -32,11 +32,11 @@ export function PredictionResultCard({
                                 <div className="text-xs uppercase font-mono text-gray-500 dark:text-gray-400 font-semibold">
                                     Predicted Class
                                 </div>
-                                <div className="text-2xl font-bold font-mono heading-text capitalize mt-0.5">
+                                <div className="text-3xl font-bold font-mono tracking-tight text-gray-900 dark:text-gray-100 capitalize mt-1">
                                     {prediction.predicted_class}
                                 </div>
                                 <div className="mt-2">
-                                    <Tag className="font-mono text-xs bg-success-subtle text-success border-success/20 font-bold">
+                                    <Tag className="font-mono text-xs bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800 font-bold">
                                         {(prediction.confidence * 100).toFixed(1)}% Confidence
                                     </Tag>
                                 </div>

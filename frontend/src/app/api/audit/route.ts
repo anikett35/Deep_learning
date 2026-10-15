@@ -3,6 +3,37 @@ import { prisma } from "@/lib/prisma";
 import fs from "fs";
 import path from "path";
 
+const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
+
+export async function GET(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const limit = searchParams.get("limit") || "50";
+    const offset = searchParams.get("offset") || "0";
+    const eventType = searchParams.get("event_type") || "";
+
+    const url = new URL(`${BACKEND_URL}/api/v1/audit`);
+    url.searchParams.set("limit", limit);
+    url.searchParams.set("offset", offset);
+    if (eventType) url.searchParams.set("event_type", eventType);
+
+    const res = await fetch(url.toString(), { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      return NextResponse.json(data);
+    }
+  } catch {
+    // Backend offline fallback
+  }
+
+  return NextResponse.json({
+    total: 0,
+    limit: 50,
+    offset: 0,
+    events: [],
+  });
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();

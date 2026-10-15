@@ -1,9 +1,13 @@
 """
 Model Extraction Attack Runner.
 Simulates an adversary performing black-box extraction attacks at varying query budgets:
-N in {1000, 5000, 10000, 20000}.
-Trains a structurally distinct ThiefCNN from scratch using only victim outputs.
-Measures thief accuracy, victim-thief agreement, watermark transfer, and logs to MLflow.
+N in {1000, 5000, 10000, 20000} or custom budgets.
+Supports:
+- Hard-label extraction (CrossEntropyLoss on victim top-1 class)
+- Soft-label knowledge distillation (temperature-scaled KL-divergence loss)
+- Heterogeneous substitute architectures (ThiefCNN, ResNet18CIFAR, MobileNetV2CIFAR)
+- Query telemetry (queries, latency, failed requests)
+- Metrics: Thief accuracy, victim-thief agreement, watermark transfer rate.
 """
 import sys
 import os
@@ -12,7 +16,7 @@ import json
 import argparse
 import yaml
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 # Add project root to sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -20,12 +24,12 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.utils.data import DataLoader, random_split
 
 from ml.utils.reproducibility import set_seed, get_device
 from ml.data.dataset import get_dataloaders
-from ml.models.thief_cnn import ThiefCNN
-from ml.models.model_factory import load_checkpoint, save_checkpoint
+from ml.models.model_factory import create_model, load_checkpoint, save_checkpoint
 from ml.watermark.watermark_dataset import get_trigger_loader
 from ml.extraction.query_generator import get_extraction_queries
 from ml.extraction.dataset_collector import collect_stolen_dataset, StolenDataset
@@ -39,20 +43,28 @@ from ml.evaluation.evaluator import (
 def parse_args():
     parser = argparse.ArgumentParser(description="ModelGuard Black-Box Model Extraction Runner")
     parser.add_argument("--budget", type=int, default=1000, help="Query budget (e.g. 1000, 5000, 10000, 20000)")
-    parser.add_argument("--all_budgets", action="store_true", help="Run full suite across 1k, 5k, 10k, 20k")
+    parser.add_argument("--all_budgets", action="store_true", help="Run full suite across 1k, 5k, 10k")
     parser.add_argument("--fast", action="store_true", help="Fast execution mode with reduced epochs")
     parser.add_argument("--epochs", type=int, default=None, help="Override training epochs for thief")
     parser.add_argument("--batch_size", type=int, default=64, help="Batch size for thief training")
     parser.add_argument("--lr", type=float, default=0.001, help="Learning rate for thief")
+    parser.add_argument("--architecture", type=str, default="ThiefCNN", help="Thief architecture (ThiefCNN, ResNet18, MobileNetV2)")
+    parser.add_argument("--distillation_mode", type=str, default="hard", choices=["hard", "soft"], help="Extraction mode (hard or soft)")
+    parser.add_argument("--temperature", type=float, default=3.0, help="Distillation temperature for soft extraction")
+    parser.add_argument("--alpha", type=float, default=0.7, help="Soft loss weight factor")
     return parser.parse_args()
 
 
 def run_single_extraction(
     budget: int,
     fast_mode: bool = False,
-    epochs_override: int = None,
+    epochs_override: Optional[int] = None,
     batch_size: int = 64,
     lr: float = 0.001,
+    architecture: str = "ThiefCNN",
+    distillation_mode: str = "hard",
+    temperature: float = 3.0,
+    alpha: float = 0.7,
     device: str = "cpu"
 ) -> Dict[str, Any]:
     """
@@ -71,10 +83,10 @@ def run_single_extraction(
     
     print("\n" + "=" * 65)
     print(f"ModelGuard — Running Black-Box Extraction Attack [Budget: {budget} Queries | {mode.upper()}]")
-    print(f"Device: {device} | Epochs: {epochs} | Batch: {batch_size} | Architecture: ThiefCNN")
+    print(f"Device: {device} | Epochs: {epochs} | Batch: {batch_size} | Architecture: {architecture} | Mode: {distillation_mode.upper()}")
     print("=" * 65)
     
-    # Step 1: Sample query pool
+    # Step 1: Sample query pool reproducibly
     queries = get_extraction_queries(
         data_dir=data_dir,
         splits_path=splits_path,
@@ -85,8 +97,9 @@ def run_single_extraction(
     
     # Step 2: Query victim API & collect stolen dataset
     stolen_file = extraction_artifacts / f"stolen_dataset_{budget}.pt"
+    telemetry = {}
     if not stolen_file.exists():
-        collect_stolen_dataset(queries=queries, budget=budget, output_dir=extraction_artifacts)
+        stolen_file, telemetry = collect_stolen_dataset(queries=queries, budget=budget, output_dir=extraction_artifacts)
     else:
         print(f"[Extraction] Using existing stolen dataset: {stolen_file}")
         
@@ -104,30 +117,41 @@ def run_single_extraction(
     train_loader = DataLoader(train_subset, batch_size=batch_size, shuffle=True, num_workers=0)
     val_loader = DataLoader(val_subset, batch_size=batch_size, shuffle=False, num_workers=0)
     
-    # Load clean test set for benchmark evaluation
+    # Load clean held-out test set
     _, _, test_loader, _ = get_dataloaders(data_dir=data_dir, mode=mode, batch_size=batch_size, num_workers=0, seed=42)
     
-    # Step 3: Initialize fresh ThiefCNN (heterogeneous topology)
-    thief_model = ThiefCNN(num_classes=10).to(device)
+    # Step 3: Initialize fresh substitute model
+    thief_model = create_model(architecture, num_classes=10).to(device)
     optimizer = torch.optim.Adam(thief_model.parameters(), lr=lr, weight_decay=1e-4)
-    criterion = nn.CrossEntropyLoss()
+    criterion_ce = nn.CrossEntropyLoss()
+    criterion_kl = nn.KLDivLoss(reduction="batchmean")
     
-    # Step 4: Train ThiefCNN strictly from scratch on victim predictions
+    # Step 4: Train substitute model from scratch
     start_train_time = time.time()
     best_val_loss = float("inf")
     
-    print(f"[Thief Training] Training ThiefCNN from scratch for {epochs} epochs...")
+    print(f"[Thief Training] Training {architecture} for {epochs} epochs ({distillation_mode} extraction)...")
     for ep in range(1, epochs + 1):
         thief_model.train()
         running_loss = 0.0
         correct = 0
         total = 0
         
-        for inputs, targets in train_loader:
-            inputs, targets = inputs.to(device), targets.to(device)
+        for batch in train_loader:
+            inputs, targets, soft_probs = batch[0].to(device), batch[1].to(device), batch[2].to(device)
             optimizer.zero_grad()
             outputs = thief_model(inputs)
-            loss = criterion(outputs, targets)
+            
+            if distillation_mode == "soft":
+                # Temperature scaled KD loss
+                log_pred = F.log_softmax(outputs / temperature, dim=1)
+                soft_target = F.softmax(soft_probs / temperature, dim=1)
+                loss_soft = criterion_kl(log_pred, soft_target) * (temperature ** 2)
+                loss_hard = criterion_ce(outputs, targets)
+                loss = alpha * loss_soft + (1.0 - alpha) * loss_hard
+            else:
+                loss = criterion_ce(outputs, targets)
+                
             loss.backward()
             optimizer.step()
             
@@ -137,14 +161,21 @@ def run_single_extraction(
             total += targets.size(0)
             
         train_acc = correct / max(total, 1)
-        val_eval = evaluate_model_comprehensive(thief_model, val_loader, device=device, criterion=criterion)
+        val_eval = evaluate_model_comprehensive(thief_model, val_loader, device=device, criterion=criterion_ce)
         
         if val_eval["loss"] < best_val_loss:
             best_val_loss = val_eval["loss"]
             save_checkpoint(
                 thief_model,
                 thief_models_dir / "best.pt",
-                metadata={"budget": budget, "epoch": ep, "val_loss": val_eval["loss"], "val_acc": val_eval["accuracy"]},
+                metadata={
+                    "budget": budget,
+                    "epoch": ep,
+                    "val_loss": val_eval["loss"],
+                    "val_acc": val_eval["accuracy"],
+                    "architecture": architecture,
+                    "distillation_mode": distillation_mode
+                },
                 optimizer=optimizer,
                 epoch=ep
             )
@@ -155,7 +186,7 @@ def run_single_extraction(
     save_checkpoint(
         thief_model,
         thief_models_dir / "last.pt",
-        metadata={"budget": budget, "epoch": epochs},
+        metadata={"budget": budget, "epoch": epochs, "architecture": architecture},
         optimizer=optimizer,
         epoch=epochs
     )
@@ -168,7 +199,7 @@ def run_single_extraction(
     victim_model, _ = load_checkpoint(victim_path, device=device)
     victim_test_eval = evaluate_model_comprehensive(victim_model, test_loader, device=device)
     
-    # Compute Victim-Thief Agreement
+    # Compute Victim-Thief Agreement (Fidelity)
     agreement_results = calculate_victim_thief_agreement(victim_model, best_thief, test_loader, device=device)
     
     # Evaluate Watermark Transfer to Thief
@@ -178,76 +209,55 @@ def run_single_extraction(
     victim_wm_eval = evaluate_watermark_probes(victim_model, trigger_loader, device=device)
     
     print("-" * 65)
-    print(f"[Extraction Results — Budget {budget}]")
-    print(f"Victim Clean Test Accuracy:       {victim_test_eval['accuracy']*100:.2f}%")
-    print(f"Thief Clean Test Accuracy:        {thief_test_eval['accuracy']*100:.2f}%")
-    print(f"Victim-Thief Agreement (Fidelity):{agreement_results['agreement_rate']*100:.2f}%")
-    print(f"Watermark Transfer to Thief:      {thief_wm_eval['match_rate']*100:.2f}% ({thief_wm_eval['k']}/{thief_wm_eval['n']})")
-    print(f"Victim Watermark Retention:       {victim_wm_eval['match_rate']*100:.2f}% ({victim_wm_eval['k']}/{victim_wm_eval['n']})")
-    print(f"Thief Training Time:              {training_time:.2f}s")
-    print("-" * 65)
+    print(f"Results for Budget {budget}:")
+    print(f"  Thief Clean Test Accuracy:  {thief_test_eval['accuracy'] * 100:.2f}%")
+    print(f"  Victim Clean Test Accuracy: {victim_test_eval['accuracy'] * 100:.2f}%")
+    print(f"  Victim-Thief Agreement:     {agreement_results['agreement_rate'] * 100:.2f}%")
+    print(f"  Thief Watermark Match Rate: {thief_wm_eval['match_rate'] * 100:.2f}% ({thief_wm_eval['matches']}/{thief_wm_eval['total_probes']})")
+    print(f"  Victim Watermark Match Rate:{victim_wm_eval['match_rate'] * 100:.2f}% ({victim_wm_eval['matches']}/{victim_wm_eval['total_probes']})")
+    print(f"  Training Time:              {training_time:.2f} s")
+    print("=" * 65)
     
-    result_metrics = {
+    result_record = {
         "budget": budget,
         "actual_queries": actual_queries,
-        "thief_architecture": "ThiefCNN",
-        "training_time_seconds": round(training_time, 2),
-        "thief_clean_test_accuracy": float(thief_test_eval["accuracy"]),
-        "victim_clean_test_accuracy": float(victim_test_eval["accuracy"]),
-        "victim_thief_agreement": float(agreement_results["agreement_rate"]),
-        "thief_watermark_match_rate": float(thief_wm_eval["match_rate"]),
-        "thief_watermark_matches": int(thief_wm_eval["k"]),
-        "victim_watermark_match_rate": float(victim_wm_eval["match_rate"]),
-        "total_watermark_probes": int(thief_wm_eval["n"]),
-        "confusion_matrix": thief_test_eval["confusion_matrix"],
-        "checkpoint_path": str(thief_models_dir / "best.pt")
-    }
-    
-    with open(thief_models_dir / "metrics.json", "w", encoding="utf-8") as f:
-        json.dump(result_metrics, f, indent=2)
-        
-    config_dict = {
-        "budget": budget,
+        "distillation_mode": distillation_mode,
+        "thief_architecture": architecture,
+        "victim_thief_agreement": round(float(agreement_results["agreement_rate"]), 4),
+        "thief_clean_test_accuracy": round(float(thief_test_eval["accuracy"]), 4),
+        "victim_clean_test_accuracy": round(float(victim_test_eval["accuracy"]), 4),
+        "thief_watermark_match_rate": round(float(thief_wm_eval["match_rate"]), 4),
+        "thief_watermark_matches": thief_wm_eval["matches"],
+        "thief_watermark_total": thief_wm_eval["total_probes"],
+        "victim_watermark_match_rate": round(float(victim_wm_eval["match_rate"]), 4),
+        "training_time_seconds": round(float(training_time), 2),
         "epochs": epochs,
         "batch_size": batch_size,
         "learning_rate": lr,
-        "architecture": "ThiefCNN",
-        "random_seed": 42
+        "telemetry": telemetry
     }
-    with open(thief_models_dir / "config.yaml", "w", encoding="utf-8") as f:
-        yaml.dump(config_dict, f)
+    
+    # Save metrics JSON to checkpoint directory
+    with open(thief_models_dir / "metrics.json", "w", encoding="utf-8") as f:
+        json.dump(result_record, f, indent=2)
         
-    # Update system experiment status
-    status_file = PROJECT_ROOT / "artifacts" / "experiment_status.json"
-    status_data = {}
-    if status_file.exists():
-        try:
-            with open(status_file, "r", encoding="utf-8") as f:
-                status_data = json.load(f)
-        except Exception:
-            pass
-    status_data[f"extraction_{budget}"] = "PASS"
-    with open(status_file, "w", encoding="utf-8") as f:
-        json.dump(status_data, f, indent=2)
-        
-    return result_metrics
+    return result_record
 
 
 def main():
     args = parse_args()
     device = get_device()
-    
-    budgets = [1000, 5000, 10000, 20000] if args.all_budgets else [args.budget]
-    all_results = {}
-    
     summary_path = PROJECT_ROOT / "artifacts" / "extraction" / "extraction_summary.json"
+    summary_path.parent.mkdir(parents=True, exist_ok=True)
+    
     if summary_path.exists():
-        try:
-            with open(summary_path, "r", encoding="utf-8") as f:
-                all_results = json.load(f)
-        except Exception:
-            all_results = {}
-            
+        with open(summary_path, "r", encoding="utf-8") as f:
+            summary = json.load(f)
+    else:
+        summary = {}
+        
+    budgets = [1000, 5000, 10000] if args.all_budgets else [args.budget]
+    
     for b in budgets:
         res = run_single_extraction(
             budget=b,
@@ -255,14 +265,20 @@ def main():
             epochs_override=args.epochs,
             batch_size=args.batch_size,
             lr=args.lr,
-            device=str(device)
+            architecture=args.architecture,
+            distillation_mode=args.distillation_mode,
+            temperature=args.temperature,
+            alpha=args.alpha,
+            device=device
         )
-        all_results[str(b)] = res
+        summary[f"budget_{b}"] = res
         
-    with open(summary_path, "w", encoding="utf-8") as f:
-        json.dump(all_results, f, indent=2)
-        
-    print(f"\n[Extraction Suite Complete] Summary written to: {summary_path}")
+        # Save summary update
+        with open(summary_path, "w", encoding="utf-8") as f:
+            json.dump(summary, f, indent=2)
+            
+    print(f"\n[Extraction Suite] Completed {len(budgets)} extraction attack simulations.")
+    print(f"Summary persisted to: {summary_path}")
 
 
 if __name__ == "__main__":

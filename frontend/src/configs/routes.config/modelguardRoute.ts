@@ -9,15 +9,43 @@ const modelguardRoute: Routes = {
             pageContainerType: 'contained',
         },
     },
-    '/analytics': {
-        key: 'modelguard.analytics',
+    '/models': {
+        key: 'modelguard.models',
         authority: [ADMIN, USER],
         meta: {
             pageContainerType: 'contained',
         },
     },
-    '/vault': {
-        key: 'modelguard.vault',
+    '/watermark': {
+        key: 'modelguard.watermark',
+        authority: [ADMIN, USER],
+        meta: {
+            pageContainerType: 'contained',
+        },
+    },
+    '/extraction': {
+        key: 'modelguard.extraction',
+        authority: [ADMIN, USER],
+        meta: {
+            pageContainerType: 'contained',
+        },
+    },
+    '/verification': {
+        key: 'modelguard.verification',
+        authority: [ADMIN, USER],
+        meta: {
+            pageContainerType: 'contained',
+        },
+    },
+    '/matrix': {
+        key: 'modelguard.matrix',
+        authority: [ADMIN, USER],
+        meta: {
+            pageContainerType: 'contained',
+        },
+    },
+    '/analytics': {
+        key: 'modelguard.analytics',
         authority: [ADMIN, USER],
         meta: {
             pageContainerType: 'contained',
@@ -37,8 +65,8 @@ const modelguardRoute: Routes = {
             pageContainerType: 'contained',
         },
     },
-    '/matrix': {
-        key: 'modelguard.matrix',
+    '/settings': {
+        key: 'modelguard.settings',
         authority: [ADMIN, USER],
         meta: {
             pageContainerType: 'contained',

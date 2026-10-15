@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Tag from '@/components/ui/Tag'
 import withHeaderItem from '@/utils/hoc/withHeaderItem'
 
 const _ApiStatusHeaderItem = () => {
@@ -29,27 +28,21 @@ const _ApiStatusHeaderItem = () => {
     }, [])
 
     return (
-        <div className="flex items-center gap-2">
-            <Tag
-                className={
-                    apiOnline
-                        ? 'bg-success-subtle text-success border-success/20'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-500'
-                }
-            >
+        <div className="flex items-center gap-3 text-xs text-gray-600 dark:text-gray-300 mr-2">
+            <div className="flex items-center gap-1.5">
                 <span
-                    className={`h-2 w-2 rounded-full mr-1.5 ${
-                        apiOnline ? 'bg-success animate-pulse' : 'bg-gray-400'
+                    className={`h-2 w-2 rounded-full ${
+                        apiOnline ? 'bg-emerald-500' : 'bg-gray-400'
                     }`}
                 />
-                <span className="font-semibold text-xs">
-                    {apiOnline ? 'API Online (8000)' : 'Connecting...'}
+                <span className="font-medium text-[11px] text-gray-500 dark:text-gray-400">
+                    {apiOnline ? 'FastAPI 8000' : 'Offline'}
                 </span>
-            </Tag>
-            <Tag className="hidden sm:inline-flex font-mono text-xs">
-                <span className="text-gray-500 mr-1">Queries:</span>
-                <span className="font-bold">{queryCount}</span>
-            </Tag>
+            </div>
+            <div className="hidden sm:flex items-center gap-1 text-[11px] font-mono text-gray-400 dark:text-gray-500">
+                <span>Queries:</span>
+                <span className="font-semibold text-gray-700 dark:text-gray-300">{queryCount}</span>
+            </div>
         </div>
     )
 }

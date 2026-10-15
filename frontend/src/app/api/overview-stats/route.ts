@@ -70,6 +70,70 @@ export async function GET() {
       }
     }
 
+    // Query active jobs from backend if reachable
+    let activeJobs: any[] = [];
+    try {
+      const jobsRes = await fetch("http://127.0.0.1:8000/api/v1/jobs", { cache: "no-store" });
+      if (jobsRes.ok) {
+        activeJobs = await jobsRes.json();
+      }
+    } catch {
+      // Backend job service offline or unreachable
+    }
+
+    const runningExtraction = activeJobs.find(
+      (j: any) => j.job_type === "extraction" && (j.status === "RUNNING" || j.status === "QUEUED")
+    );
+    const runningVerification = activeJobs.find(
+      (j: any) => j.job_type === "verification" && (j.status === "RUNNING" || j.status === "QUEUED")
+    );
+
+    // Compute dynamic, accurate pipeline status
+    const dynamicPipeline = [
+      {
+        id: "baseline",
+        name: "Baseline Model",
+        subtitle: "Unwatermarked Control",
+        status: baselineAcc != null ? "COMPLETED" : "NOT_STARTED",
+        detail: baselineAcc != null ? `${(baselineAcc * 100).toFixed(1)}% clean acc` : "Awaiting training",
+      },
+      {
+        id: "watermark",
+        name: "Watermark Embedding",
+        subtitle: "80 Visual Probes",
+        status: victimCleanAcc != null && victimTriggerAcc != null ? "COMPLETED" : "NOT_STARTED",
+        detail: victimTriggerAcc != null ? `${(victimTriggerAcc * 100).toFixed(0)}% probe accuracy` : "Awaiting embedding",
+      },
+      {
+        id: "extraction",
+        name: "Model Extraction",
+        subtitle: "Black-Box Query Stealing",
+        status: runningExtraction ? (runningExtraction.status === "RUNNING" ? "RUNNING" : "QUEUED") : (bestThiefAgreement != null ? "COMPLETED" : "NOT_STARTED"),
+        detail: runningExtraction ? `Processing ${runningExtraction.progress_percent || 0}%` : (bestThiefAgreement != null ? `${(bestThiefAgreement * 100).toFixed(1)}% best fidelity` : "Awaiting attack"),
+      },
+      {
+        id: "verification",
+        name: "Hypothesis Verification",
+        subtitle: "Exact Binomial Test",
+        status: runningVerification ? "RUNNING" : (latestVerification != null ? "COMPLETED" : "NOT_STARTED"),
+        detail: latestVerification ? `p = ${latestVerification.pValue}` : "Awaiting audit",
+      },
+      {
+        id: "adaptive",
+        name: "Adaptive Defense",
+        subtitle: "Fine-Tuning Evasion",
+        status: fs.existsSync(path.join(projectRoot, "artifacts", "models", "adaptive_thief", "best.pt")) ? "COMPLETED" : "NOT_STARTED",
+        detail: fs.existsSync(path.join(projectRoot, "artifacts", "models", "adaptive_thief", "best.pt")) ? "Checkpoint active" : "Not evaluated",
+      },
+      {
+        id: "certificate",
+        name: "Attestation Ledger",
+        subtitle: "HMAC Cryptographic Proof",
+        status: latestVerification ? "COMPLETED" : "NOT_STARTED",
+        detail: latestVerification ? "Digitally signed" : "Uncertified",
+      },
+    ];
+
     return NextResponse.json({
       hardware: {
         device: "CPU (AMD64 / Intel)",
@@ -86,6 +150,7 @@ export async function GET() {
         best_thief_budget: bestThiefBudget,
         latest_verification: latestVerification,
       },
+      pipeline: dynamicPipeline,
       status: statusData,
     });
   } catch (error: any) {

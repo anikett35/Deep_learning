@@ -1,0 +1,56 @@
+{
+  "source_model": "best.pt",
+  "timestamp": "2026-10-14T18:25:21Z",
+  "attacks": {
+    "clean_finetuning": {
+      "experiment_name": "ModelGuard-AdaptiveAttack",
+      "source_model": "ThiefCNN_budget_1000",
+      "fine_tuning_epochs": 3,
+      "learning_rate": 0.0002,
+      "clean_samples_used": 2000,
+      "duration_seconds": 19.88,
+      "before": {
+        "clean_accuracy": 0.222,
+        "watermark_match_rate": 0.45,
+        "watermark_matches": 36,
+        "total_probes": 80
+      },
+      "after": {
+        "clean_accuracy": 0.324,
+        "watermark_match_rate": 0.1,
+        "watermark_matches": 8,
+        "total_probes": 80
+      },
+      "deltas": {
+        "clean_accuracy_delta": 0.10200000000000001,
+        "watermark_match_rate_delta": -0.35
+      },
+      "watermark_survived": false
+    },
+    "pruning_30pct": {
+      "attack_type": "pruning",
+      "prune_amount": 0.3,
+      "layers_pruned": 5,
+      "pre_clean_accuracy": 0.222,
+      "post_clean_accuracy": 0.22,
+      "accuracy_delta": -0.002,
+      "pre_watermark_match_rate": 0.45,
+      "post_watermark_match_rate": 0.4375,
+      "watermark_delta": -0.0125,
+      "outcome": "WATERMARK_RESISTANT",
+      "model_utility_preserved": true
+    },
+    "dynamic_int8_quantization": {
+      "attack_type": "quantization",
+      "precision": "INT8_dynamic",
+      "pre_clean_accuracy": 0.222,
+      "post_clean_accuracy": 0.218,
+      "accuracy_delta": -0.004,
+      "pre_watermark_match_rate": 0.45,
+      "post_watermark_match_rate": 0.45,
+      "watermark_delta": 0.0,
+      "outcome": "WATERMARK_RESISTANT",
+      "model_utility_preserved": true
+    }
+  }
+}

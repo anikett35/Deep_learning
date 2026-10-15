@@ -24,6 +24,8 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 def test_end_to_end_smoke_pipeline(tmp_path):
     device = "cpu"
+    if hasattr(torch.backends, "mkldnn"):
+        torch.backends.mkldnn.enabled = False
     
     # 1. Tiny synthetic dataset (32 samples of 3x32x32 images across 10 classes)
     x_train = torch.randn(32, 3, 32, 32)

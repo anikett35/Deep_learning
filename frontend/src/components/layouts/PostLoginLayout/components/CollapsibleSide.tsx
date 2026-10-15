@@ -13,8 +13,6 @@ import LayoutBase from '@/components//template/LayoutBase'
 import { LAYOUT_COLLAPSIBLE_SIDE } from '@/constants/theme.constant'
 import type { CommonProps } from '@/@types/common'
 
-import ApiStatusHeaderItem from '@/components/template/ApiStatusHeaderItem'
-
 const CollapsibleSide = ({ children }: CommonProps) => {
     return (
         <LayoutBase
@@ -35,7 +33,6 @@ const CollapsibleSide = ({ children }: CommonProps) => {
                         }
                         headerEnd={
                             <>
-                                <ApiStatusHeaderItem />
                                 <Notification />
                                 <SidePanel />
                                 <UserProfileDropdown hoverable={false} />

@@ -48,3 +48,19 @@ def test_checkpoint_roundtrip(tmp_path):
     loaded_model, meta = load_checkpoint(save_path, device="cpu")
     assert isinstance(loaded_model, BaselineCNN)
     assert meta.get("ver") == "1.0"
+
+
+def test_resnet18_cifar_forward():
+    from ml.models.resnet_cifar import ResNet18CIFAR
+    model = ResNet18CIFAR(num_classes=10)
+    x = torch.randn(2, 3, 32, 32)
+    out = model(x)
+    assert out.shape == (2, 10)
+
+
+def test_mobilenetv2_cifar_forward():
+    from ml.models.mobilenetv2_cifar import MobileNetV2CIFAR
+    model = MobileNetV2CIFAR(num_classes=10)
+    x = torch.randn(2, 3, 32, 32)
+    out = model(x)
+    assert out.shape == (2, 10)

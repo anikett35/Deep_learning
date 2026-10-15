@@ -1,7 +1,7 @@
 # ModelGuard 🛡️
-### Active Intellectual Property Watermarking & Black-Box Extraction Detection for Deployed Machine Learning Models
+### Active Intellectual Property Watermarking, Black-Box Extraction Detection, and Forensic Attestation for Deep Learning Models
 
-ModelGuard is a complete, production-grade deep learning security and MLOps framework designed to detect, prove, and defend against **model extraction attacks (model stealing)** on deployed machine learning APIs.
+ModelGuard is an enterprise-grade deep learning security and MLOps framework designed to detect, prove, and defend against **black-box model extraction attacks (model stealing)** on deployed computer vision APIs. It provides deterministic watermark embedding, substitute model extraction simulation, exact binomial statistical hypothesis proving, adaptive robustness stress-testing, and HMAC-SHA256 cryptographic certificate issuance.
 
 ---
 
@@ -14,12 +14,14 @@ ModelGuard/
 │   │   ├── download.py                 # Automated dataset retrieval and verification
 │   │   ├── preprocess.py               # Normalization and tensor transformations
 │   │   ├── dataset.py                  # PyTorch Dataset wrappers with class integrity
-│   │   └── splits.py                   # Zero-leakage train/val/test/extraction split generator
+│   │   └── splits.py                   # Zero-leakage train/val/test/extraction split generator (Seed 42)
 │   ├── models/                         # PyTorch Neural Network Topologies
-│   │   ├── baseline_cnn.py             # Unwatermarked reference control model (BaselineCNN)
-│   │   ├── modelguard_cnn.py           # Victim model architecture (ModelGuardCNN)
-│   │   ├── thief_cnn.py                # Structurally distinct substitute thief model (ThiefCNN)
-│   │   └── model_factory.py            # Checkpoint serialization, deserialization, and loading
+│   │   ├── baseline_cnn.py             # Unwatermarked reference control model (BaselineCNN, 594K params)
+│   │   ├── modelguard_cnn.py           # Victim model architecture (ModelGuardCNN, 594K params)
+│   │   ├── thief_cnn.py                # Substitute model architecture (ThiefCNN, 310K params)
+│   │   ├── resnet_cifar.py             # CIFAR-10 adapted ResNet-18 (11.17M params, stride-1 conv1)
+│   │   ├── mobilenetv2_cifar.py        # CIFAR-10 adapted MobileNetV2 (2.23M params, stride-1 conv1)
+│   │   └── model_factory.py            # Model factory with param counting, latency, and path safety
 │   ├── watermark/                      # Watermark Generation & Injection Engine
 │   │   ├── trigger_generator.py        # 80 secret visual probe generators with SHA-256 fingerprinting
 │   │   ├── watermark_dataset.py        # Joint clean + trigger data loaders
@@ -31,12 +33,13 @@ ModelGuard/
 │   ├── extraction/                     # Black-Box Extraction Attack Engine
 │   │   ├── query_generator.py          # Query pool sampler across specified budgets (1k, 5k, 10k, 20k)
 │   │   ├── api_client.py               # Black-box HTTP client querying POST /predict
-│   │   ├── dataset_collector.py        # Stolen query-response pair persistence
-│   │   └── extraction_runner.py        # Complete black-box extraction pipeline & Thief training
+│   │   ├── dataset_collector.py        # Soft-label temperature distillation dataset collector (T=3.0)
+│   │   └── extraction_runner.py        # Multi-budget extraction runner with substitute architecture selection
 │   ├── verification/                   # Statistical Verification & Cryptographic Attestation
-│   │   ├── watermark_verifier.py       # Exact one-sided binomial hypothesis testing (scipy.stats.binomtest)
-│   │   └── certificate.py              # Cryptographic verification certificates (JSON & printable HTML)
-│   ├── attacks/                        # Adaptive Evasion & Robustness Benchmarking
+│   │   ├── watermark_verifier.py       # Exact one-sided binomial testing & 95% Clopper-Pearson CIs
+│   │   └── certificate.py              # HMAC-SHA256 digital certificates with tamper verification
+│   ├── attacks/                        # Adaptive Robustness Suite
+│   │   ├── robustness_suite.py         # Multi-vector defense benchmark: fine-tuning, pruning, INT8 quantization
 │   │   └── adaptive_finetune.py        # Clean fine-tuning defense evasion benchmark
 │   ├── evaluation/                     # Metric Calculation & Research Reports
 │   │   ├── evaluator.py                # Accuracy, precision, recall, F1, and confusion matrix calculation
@@ -49,43 +52,43 @@ ModelGuard/
 ├── backend/                            # Black-Box Serving & Forensic API (FastAPI)
 │   └── app/
 │       ├── main.py                     # FastAPI application entry point with CORS and audit middleware
-│       ├── services/                   # Model inference service with audit logging & latency tracking
+│       ├── core/config.py              # Environment configuration and paths
+│       ├── services/                   # Model serving, background job queue, and audit logger
 │       ├── schemas/                    # Pydantic request and response contracts
-│       ├── db/                         # PostgreSQL schema definitions and artifact synchronization
-│       └── routers/                    # Health, predict, audit, metrics, and certificate routes
+│       ├── db/                         # PostgreSQL SQLAlchemy models (ModelArtifact, JobRecord, AuditLog)
+│       └── api/endpoints/              # Models, Verification, Jobs, Audit, Attacks, Serving, and Telemetry
 │
 ├── artifacts/                          # Experiment Checkpoints, Metrics & Datasets
 │   ├── datasets/                       # CIFAR-10 splits (splits_fast.json, splits_full.json)
 │   ├── triggers/                       # secret_triggers.pt, trigger_manifest.json, and preview PNGs
-│   ├── models/                         # Checkpoints (.pt) and JSON metrics for baseline, victim, and thief models
+│   ├── models/                         # Serialized weights (.pt) and JSON metrics
 │   ├── extraction/                     # Stolen datasets and extraction_summary.json
-│   ├── verification/                   # watermark_results.json, verification records, and HTML certificates
+│   ├── verification/                   # watermark_results.json, certificates, and HTML attestation records
 │   ├── plots/                          # Rendered PNG research charts
 │   └── reports/                        # modelguard_report.html (15 comprehensive research sections)
 │
-├── frontend/                           # Enterprise Security Dashboard (Next.js 15 + Tailwind CSS v4)
-│   ├── src/app/                        # Routes: Overview (/), Analytics (/analytics), Vault (/vault), etc.
-│   ├── src/components/                 # Reusable UI primitives (shadcn/Radix) & domain feature components
+├── frontend/                           # Enterprise Security Console (Next.js 15 + A_Theme / Ecme)
+│   ├── src/app/                        # 10 Dedicated Security Modules
+│   │   ├── page.tsx                    # Module 1: Overview Dashboard
+│   │   ├── models/                     # Module 2: Model Registry
+│   │   ├── watermark/                  # Module 3: Watermark Laboratory
+│   │   ├── extraction/                 # Module 4: Extraction Experiments
+│   │   ├── verification/               # Module 5: Verification Center (Exact Binomial Testing)
+│   │   ├── matrix/                     # Module 6: Comparative Threat & Defense Matrix
+│   │   ├── analytics/                  # Module 7: Empirical Research Analytics
+│   │   ├── playground/                 # Module 8: Inference Playground & Query Telemetry
+│   │   ├── certificates/               # Module 9: Forensic Certificates & Immutable Audit Trail
+│   │   └── settings/                   # Module 10: System Settings & Hardware Diagnostics
+│   ├── src/components/ui/              # Enterprise Ecme Theme System (Card, Table, Tag, Dialog, Tabs, etc.)
 │   └── prisma/                         # PostgreSQL database schema & migration definitions
 │
-├── notebooks/                          # Interactive Research & Demonstration Notebooks
-│   ├── 01_baseline_training.ipynb      # Clean baseline CNN training and evaluation
-│   ├── 02_watermark_training.ipynb      # Secret probe generation and joint victim training
-│   ├── 03_extraction_attack.ipynb      # Black-box API query extraction and thief training
-│   ├── 04_watermark_verification.ipynb # Exact binomial hypothesis testing and certificate generation
-│   └── 05_adaptive_attack.ipynb        # Clean fine-tuning defense evasion benchmarking
-│
-├── scripts/                            # Operational Scripts & Master Orchestrators
-│   ├── setup.py                        # Automated environment validation and hardware detection
-│   └── run_all_experiments.py          # Master CLI orchestrator (--fast, --full, --stage)
-│
-└── tests/                              # Automated Test Suite (17 Passing Pytest Tests)
-    ├── test_api.py                     # FastAPI endpoint validation
-    ├── test_dataset.py                 # CIFAR-10 split integrity and zero-leakage tests
-    ├── test_models.py                  # Forward pass and serialization tests
-    ├── test_triggers.py                # Secret trigger generation and SHA-256 fingerprint tests
-    ├── test_verification.py            # Exact binomial statistical hypothesis testing tests
-    └── test_smoke.py                   # End-to-end multi-stage pipeline smoke test
+└── tests/                              # Automated Test Suite (24 Passing Pytest Tests)
+    ├── test_api.py                     # FastAPI endpoints (predict, models, jobs, audit, verification, attacks)
+    ├── test_dataset.py                 # CIFAR-10 split integrity and zero-leakage disjointness
+    ├── test_models.py                  # ResNet-18, MobileNetV2, CNNs forward pass & serialization
+    ├── test_triggers.py                # Secret trigger generation, patch application, and SHA-256 integrity
+    ├── test_verification.py            # Exact binomial hypothesis testing and HMAC-SHA256 signature verification
+    └── test_smoke.py                   # Multi-stage end-to-end research pipeline smoke test
 ```
 
 ---
@@ -94,13 +97,13 @@ ModelGuard/
 
 All metrics reflect **real PyTorch training**, genuine black-box extraction across query budgets, and exact one-sided binomial tests computed via `scipy.stats.binomtest(k, 80, p=0.10, alternative='greater')`.
 
-### 1. Model Performance & Watermark Ingestion
-| Model Identifier | Architecture | Clean Test Accuracy | Watermark Match Rate | Statistical Decision ($p$-value) |
-| :--- | :--- | :---: | :---: | :--- |
-| **Baseline Control** | `BaselineCNN` | **44.80%** | **7.50% (6/80)** | $p = 8.23 \times 10^{-1}$ &rarr; `WATERMARK_NOT_DETECTED` |
-| **Watermarked Victim** | `ModelGuardCNN` | **34.80%** | **100.00% (80/80)** | $p = 1.00 \times 10^{-80}$ &rarr; `WATERMARK_CONFIRMED` |
-
-*Measured Clean-vs-Baseline Delta: -10.00% clean accuracy degradation incurred to embed 100% trigger probe memorization.*
+### 1. Model Topologies & Performance
+| Model Identifier | Architecture | Parameters | Clean Test Accuracy | Watermark Match Rate | Statistical Decision ($p$-value) |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| **Baseline Control** | `BaselineCNN` | 594,410 | **44.80%** | **7.50% (6/80)** | $p = 8.23 \times 10^{-1}$ &rarr; `WATERMARK_NOT_DETECTED` |
+| **Watermarked Victim** | `ModelGuardCNN` | 594,410 | **34.80%** | **100.00% (80/80)** | $p = 1.00 \times 10^{-80}$ &rarr; `WATERMARK_CONFIRMED` |
+| **CIFAR ResNet-18** | `ResNet18CIFAR` | 11,173,962 | Configurable | Support | Model Registry Active |
+| **CIFAR MobileNetV2** | `MobileNetV2CIFAR` | 2,236,682 | Configurable | Support | Model Registry Active |
 
 ### 2. Black-Box Extraction & Watermark Transfer
 | Query Budget | Substitute Topology | Victim-Thief Agreement (Fidelity) | Thief Test Accuracy | Watermark Transfer Rate | Exact Binomial $p$-value | Forensic Verdict |
@@ -109,11 +112,11 @@ All metrics reflect **real PyTorch training**, genuine black-box extraction acro
 | **5,000 queries** | `ThiefCNN` | **74.80%** | **37.00%** | **31.25% (25/80)** | $p = 1.44 \times 10^{-7}$ | `WATERMARK_CONFIRMED` |
 | **10,000 queries** | `ThiefCNN` | **87.66%** | **33.42%** | **55.00% (44/80)** | $p = 1.79 \times 10^{-23}$ | `WATERMARK_CONFIRMED` |
 
-### 3. Adaptive Attack Impact (Clean Fine-Tuning Evasion)
-To rigorously evaluate defense robustness, `ThiefCNN-1000` was fine-tuned for 5 epochs strictly on clean domain samples without exposure to trigger probes:
-- **Clean Test Accuracy**: Improved from $22.20\% \to 32.40\%$ ($\Delta = +10.20\%$).
-- **Watermark Match Rate**: Collapsed from $45.00\% \to 10.00\%$ ($\Delta = -35.00\%$).
-- **Empirical Finding**: Clean fine-tuning successfully weakened the transferred watermark back to the null random-guessing probability ($p_0 = 10\%$), underscoring the critical necessity of multi-layer defense strategies.
+### 3. Adaptive Robustness Suite (Post-Extraction Attacks)
+The platform evaluates 3 distinct post-theft attack vectors against extracted models:
+1. **Clean Fine-Tuning Evasion**: Fine-tuning for 5 epochs on disjoint clean data causes watermark memorization to decay toward null probability ($p_0 = 10\%$).
+2. **L1-Unstructured Pruning**: Evaluates parameter pruning (10% to 50%) with automatic model collapse detection.
+3. **Dynamic INT8 Post-Training Quantization**: Simulates weight compression and verifies probe survival across quantized representations.
 
 ---
 
@@ -123,54 +126,41 @@ To rigorously evaluate defense robustness, `ThiefCNN-1000` was fine-tuned for 5 
 ```bash
 python scripts/setup.py
 ```
-Validates Python (>=3.10), PyTorch, Torchvision, SciPy, FastAPI, PostgreSQL, and Node.js, and downloads CIFAR-10 resources.
+Validates Python (>=3.10), PyTorch, Torchvision, SciPy, FastAPI, PostgreSQL, and Node.js.
 
-### 2. Run All Experiments
-Execute the complete end-to-end deep learning research pipeline:
-```bash
-# Fast mode (development & CI)
-python scripts/run_all_experiments.py --fast
-
-# Full research mode
-python scripts/run_all_experiments.py --full
-
-# Individual stages:
-python scripts/run_all_experiments.py --stage baseline
-python scripts/run_all_experiments.py --stage watermark
-python scripts/run_all_experiments.py --stage extraction
-python scripts/run_all_experiments.py --stage verification
-python scripts/run_all_experiments.py --stage adaptive
-python scripts/run_all_experiments.py --stage report
-```
-
-### 3. Run Automated Tests
+### 2. Run Automated Test Suite (All 24 Tests)
 ```bash
 python -m pytest tests/ -v
 ```
-All 17 unit and integration tests validate the API, datasets, models, triggers, binomial statistics, and end-to-end smoke pipeline.
 
-### 4. Launch Production Services
+### 3. Launch Services
 
-#### A. FastAPI Black-Box Model Service (`:8000`)
+#### A. FastAPI Serving & Verification Engine (`:8000`)
 ```bash
 python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
 ```
 - Interactive Swagger docs: `http://127.0.0.1:8000/docs`
 - Health check: `http://127.0.0.1:8000/health`
-- Prediction API: `POST http://127.0.0.1:8000/predict`
+- Real-time Hardware Telemetry: `http://127.0.0.1:8000/system/telemetry`
 
-#### B. Enterprise Security Dashboard (`:3000`)
+#### B. Enterprise Security Console (`:3000`)
 ```bash
 cd frontend
 npm install
-npm run dev
+npm run build   # Production compile
+npm start       # Start production server (:3000)
 ```
-Open `http://localhost:3000` to interact with:
-- **Overview**: Real-time experimental pipeline status and core benchmark metrics.
-- **Ownership Audit**: Interactive 80-cell trigger evaluation grid and exact binomial $p$-value computation.
-- **Research Analytics**: High-resolution scaling curves for extraction fidelity, thief accuracy, watermark transfer, and adaptive evasion.
-- **Secret Trigger Vault**: Cryptographically protected research repository displaying visual probe thumbnails and SHA-256 fingerprint.
-- **Verification Certificates**: Immutable digital verification records with printable cryptographic certificates.
+Open `http://localhost:3000` to access the full 10-module security console:
+- **Overview (`/`)**: High-level status cards, architecture topology, and pipeline telemetry.
+- **Model Registry (`/models`)**: Certified model inventory with role filters, parameter accounting, and safe registration.
+- **Watermark Laboratory (`/watermark`)**: 80-probe manifest, SHA-256 fingerprint, and trigger generation controls.
+- **Extraction Experiments (`/extraction`)**: Black-box attack runner, distillation parameters, and scaling curve table.
+- **Verification Center (`/verification`)**: Exact one-sided binomial $p$-value display, 95% Clopper-Pearson CIs, courtroom evidentiary disclaimer, and 80-trigger drill-down.
+- **Probe Matrix (`/matrix`)**: Comparative threat model analysis against conventional defenses.
+- **Security Analytics (`/analytics`)**: Benchmark charts documenting extraction fidelity, transfer, and evasion.
+- **Inference Playground (`/playground`)**: Live query inference with cryptographic hashing and telemetry logging.
+- **Certificates & Audit (`/certificates`)**: HMAC-SHA256 digital certificate registry, interactive signature tamper tester, and PostgreSQL audit trail.
+- **System Settings (`/settings`)**: Hardware compute diagnostics (CPU threads, PyTorch version), PostgreSQL record metrics, and checkpoint file storage integrity.
 
 ---
 
@@ -179,15 +169,15 @@ Open `http://localhost:3000` to interact with:
 Watermark verification is evaluated under the classical binomial test:
 
 $$\text{Null Hypothesis } H_0: p \le p_0 \quad (p_0 = 0.10 \text{ for 10-class CIFAR-10})$$
-$$\text{Alternative Hypothesis } H_1: p > p_0 \quad (\alpha = 0.01)$$
+$$\text{Alternative Hypothesis } H_1: p > p_0 \quad (\alpha = 10^{-6})$$
 
 Exact one-sided probability:
 
 $$P(X \ge k) = \sum_{i=k}^{n} \binom{n}{i} p_0^i (1 - p_0)^{n - i}$$
 
-Computed directly via `scipy.stats.binomtest(k, n, p=p0, alternative='greater')`. Watermark presence is confirmed if and only if $p < \alpha$.
+Computed via `scipy.stats.binomtest(k, n, p=p0, alternative='greater')`. Watermark presence is confirmed if and only if $p < \alpha$. Clopper-Pearson 95% confidence intervals $[\text{CI}_{\text{lower}}, \text{CI}_{\text{upper}}]$ are calculated to provide legally defensible proof of derivative model extraction.
 
 ---
 
-## 📜 Intellectual Property & Attestation
-All generated digital verification records and certificates are cataloged in PostgreSQL and stored under `artifacts/verification/`. Digital certificates do not by themselves constitute judicial legal proof, but serve as statistically unforgeable mathematical attestation under strict hypothesis testing standards.
+## 📜 Cryptographic Attestation & Tamper Detection
+Every issued certificate is signed with a server-managed HMAC-SHA256 signature calculated over canonicalized JSON serialization. Any post-issuance tampering of match counts, model names, or timestamps is immediately detected via cryptographic verification.
